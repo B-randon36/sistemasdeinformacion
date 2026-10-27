@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balanced Scorecard - AGRO PERUVIAN FOODS S.A.C. | Odoo 17 ERP</title>
+  <meta name="description" content="Sistema Empresarial de Cuadro de Mando Integral (Balanced Scorecard) para AGRO PERUVIAN FOODS S.A.C., integrado a los módulos de Odoo 17 ERP.">
+  
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0f172a',
+              slate: '#1e293b',
+              cacao: '#6d4c41',
+              coco: '#059669',
+              gold: '#d97706'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex antialiased">
+
+  <!-- ======================================================== -->
+  <!-- 1. SIDEBAR LATERAL FIJO (Dark Slate #0f172a) -->
+  <!-- ======================================================== -->
+  <aside id="sidebar" class="w-72 bg-brand-navy text-slate-300 flex-shrink-0 flex flex-col justify-between border-r border-slate-800 z-30 select-none">
+    <div>
+      <!-- Brand Header -->
+      <div class="p-6 border-b border-slate-800/80 flex items-center space-x-3.5">
+        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-emerald-900/30">
+          <i class="fas fa-seedling text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-heading font-extrabold text-white text-base leading-tight tracking-wide">AGRO PERUVIAN</h1>
+          <p class="text-[11px] font-semibold text-emerald-400 tracking-wider uppercase">Foods S.A.C. &bull; Odoo 17</p>
+        </div>
+      </div>
+
+      <!-- Quick Odoo Sync Badge -->
+      <div class="px-5 py-3.5 bg-slate-900/70 border-b border-slate-800/60 flex items-center justify-between text-xs">
+        <div class="flex items-center space-x-2 text-slate-300">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="font-mono text-[11px]">agroperuvian_db</span>
+        </div>
+        <button class="btn-sync-odoo text-emerald-400 hover:text-emerald-300 font-semibold text-[11px] flex items-center space-x-1 transition-colors">
+          <i class="fas fa-rotate"></i>
+          <span>Sync</span>
+        </button>
+      </div>
+
+      <!-- Navigation Menu (9 Módulos Requeridos) -->
+      <nav class="p-4 space-y-1 text-sm font-medium">
+        <div class="px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Cuadro de Mando Integral</div>
+        
+        <a href="#dashboard" data-view="dashboard" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50">
+          <i class="fas fa-chart-pie w-5 text-center text-base text-blue-400"></i>
+          <span>1. Dashboard Ejecutivo</span>
+        </a>
+
+        <a href="#mapa" data-view="mapa" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50">
+          <i class="fas fa-sitemap w-5 text-center text-base text-indigo-400"></i>
+          <span>2. Mapa Estratégico</span>
+        </a>
+
+        <a href="#objetivos" data-view="objetivos" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50">
+          <i class="fas fa-bullseye w-5 text-center text-base text-emerald-400"></i>
+          <span>3. Objetivos Estratégicos</span>
+        </a>
+
+        <a href="#kpis" data-view="kpis" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50">
+          <i class="fas fa-tachometer-alt w-5 text-center text-base text-amber-400"></i>
+          <span>4. Indicadores KPI</span>
+        </a>
+
+        <a href="#mediciones" data-view="mediciones" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50">
+          <i class="fas fa-clipboard-check w-5 text-center text-base text-teal-400"></i>
+          <span>5. Registro Mediciones</span>
+        </a>
+
+        <a href="#iniciativas" data-view="iniciativas" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50">
+          <i class="fas fa-rocket w-5 text-center text-base text-purple-400"></i>
+          <span>6. Iniciativas y Proyectos</span>
+        </a>
+
+        <a href="#reportes" data-view="reportes" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50">
+          <i class="fas fa-file-invoice text-rose-400 w-5 text-center text-base"></i>
+          <span>7. Reportes y Exportación</span>
+        </a>
+
+        <div class="pt-3 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">Configuración & ERP</div>
+
+        <a href="#admin" data-view="admin" class="sidebar-link flex items-center space-x-3 px-3 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50">
+          <i class="fas fa-sliders-h w-5 text-center text-base text-cyan-400"></i>
+          <span>8. Módulos Odoo & Admin</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Active User & Demo Switcher Footer -->
+    <div class="p-4 border-t border-slate-800 bg-slate-950/60">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-white font-bold text-sm">
+            <i class="fas fa-user-tie text-emerald-400"></i>
+          </div>
+          <div>
+            <div id="user-display-name" class="text-xs font-bold text-white truncate max-w-[130px]">Admin</div>
+            <div id="user-display-role" class="text-[10px] font-semibold text-emerald-400">ADMIN</div>
+          </div>
+        </div>
+        <button id="btn-logout" title="Cerrar sesión" class="text-slate-400 hover:text-rose-400 p-1.5 transition-colors">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+
+      <!-- Quick Demo Switcher -->
+      <div class="pt-2 border-t border-slate-800/80">
+        <span class="text-[10px] text-slate-400 block mb-1.5 font-semibold">Cambio Rápido de Rol (Demo):</span>
+        <div class="grid grid-cols-3 gap-1 text-[10px]">
+          <button onclick="app.cambiarUsuarioDemo('admin', 'admin123')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-1 rounded font-medium text-center transition-colors">Admin</button>
+          <button onclick="app.cambiarUsuarioDemo('gerente', 'gerente123')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-1 rounded font-medium text-center transition-colors">Gerente</button>
+          <button onclick="app.cambiarUsuarioDemo('jefe_mrp', 'mrp123')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 py-1 rounded font-medium text-center transition-colors">Planta</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ======================================================== -->
+  <!-- 2. CONTENIDO PRINCIPAL Y BARRA SUPERIOR -->
+  <!-- ======================================================== -->
+  <div id="main-content" class="flex-1 flex flex-col min-h-screen overflow-x-hidden">
+    
+    <!-- Barra Superior Fija -->
+    <header id="top-bar" class="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-8 flex items-center justify-between sticky top-0 z-20">
+      <div class="flex items-center space-x-4">
+        <!-- Selector de Período Global -->
+        <div class="flex items-center space-x-2 bg-slate-100/80 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700">
+          <i class="fas fa-calendar-alt text-blue-600"></i>
+          <span>Período de Evaluación:</span>
+          <select id="global-period-select" class="period-select-sync bg-transparent font-bold text-slate-900 focus:outline-none cursor-pointer">
+            <option value="2026-10">Octubre 2026 (Oficial)</option>
+          </select>
+        </div>
+
+        <!-- Módulo de Empresa -->
+        <div class="hidden md:flex items-center space-x-1.5 text-xs text-slate-500 font-medium">
+          <span>Sector:</span>
+          <span class="bg-amber-100 text-amber-800 font-semibold px-2 py-0.5 rounded-full">Agroindustrial (Cacao & Coco)</span>
+        </div>
+      </div>
+
+      <!-- Action CTAs -->
+      <div class="flex items-center space-x-3">
+        <!-- Botón Sincronizar Mediciones Odoo 17 -->
+        <button class="btn-sync-odoo bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md shadow-emerald-600/20 flex items-center space-x-2 transition-all">
+          <i class="fas fa-sync-alt"></i>
+          <span>Sincronizar Módulos Odoo 17</span>
+        </button>
+
+        <button onclick="app.imprimirPDF()" title="Imprimir / Exportar PDF" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm transition-colors">
+          <i class="fas fa-print"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Printable Header (Visible only when printing) -->
+    <div class="print-only p-6 border-b border-slate-300">
+      <h1 class="text-2xl font-bold text-slate-900">AGRO PERUVIAN FOODS S.A.C.</h1>
+      <h2 class="text-base text-slate-600 font-medium">Reporte Oficial de Balanced Scorecard (Cuadro de Mando Integral)</h2>
+      <p class="text-xs text-slate-500 mt-1">Integración ERP Odoo 17 (agroperuvian_db) &bull; Fecha de Emisión: 2026-10-26</p>
+    </div>
+
+    <!-- Contenedor Dinámico de Vistas -->
+    <main class="flex-1 p-8">
+
+      <!-- ======================================================== -->
+      <!-- VISTA 1: DASHBOARD EJECUTIVO -->
+      <!-- ======================================================== -->
+      <section id="view-dashboard" class="view-section space-y-6">
+        <!-- Banner de Bienvenida y Filtros -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-brand-slate text-white p-6 rounded-3xl shadow-xl shadow-slate-900/10">
+          <div>
+            <div class="flex items-center space-x-2 text-xs font-semibold text-emerald-400 mb-1">
+              <i class="fas fa-check-circle"></i>
+              <span>SISTEMA DE GESTIÓN ESTRATÉGICA Y CONTROL OPERATIVO</span>
+            </div>
+            <h2 class="font-heading font-extrabold text-2xl tracking-tight text-white">Tablero de Control Balanced Scorecard</h2>
+            <p class="text-xs text-slate-300 mt-1 max-w-2xl">
+              Monitoreo continuo de los 16 Objetivos Estratégicos y 14 KPIs de las plantas de Satipo y Pichanaqui sincronizados en tiempo real desde <strong>Odoo 17</strong>.
+            </p>
+          </div>
+
+          <!-- Medidor de Cumplimiento Global Ponderado -->
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 flex items-center space-x-5 flex-shrink-0">
+            <div>
+              <span class="text-xs font-semibold text-slate-300 block">Cumplimiento Global</span>
+              <div id="dash-cumplimiento-global" class="text-3xl font-extrabold font-heading text-white">75.95%</div>
+              <div class="w-32 bg-slate-700/60 rounded-full h-2 mt-1.5 overflow-hidden">
+                <div id="dash-progress-global" class="h-2 rounded-full bg-emerald-400" style="width: 76%"></div>
+              </div>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-300 text-xl font-bold">
+              <i class="fas fa-award"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Tarjetas de Métricas Ejecutivas -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Total Objetivos -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+            <div>
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Objetivos BSC</span>
+              <div id="dash-total-objetivos" class="text-2xl font-extrabold font-heading text-slate-900 mt-1">16</div>
+              <span class="text-[11px] text-slate-500 mt-0.5 block">En las 4 perspectivas</span>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+              <i class="fas fa-bullseye"></i>
+            </div>
+          </div>
+
+          <!-- Total KPIs -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+            <div>
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Indicadores KPI</span>
+              <div id="dash-total-kpis" class="text-2xl font-extrabold font-heading text-slate-900 mt-1">14</div>
+              <span class="text-[11px] text-slate-500 mt-0.5 block">Mapeados a Odoo 17</span>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+              <i class="fas fa-tachometer-alt"></i>
+            </div>
+          </div>
+
+          <!-- Total Iniciativas -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm flex items-center justify-between">
+            <div>
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Iniciativas Activas</span>
+              <div id="dash-total-iniciativas" class="text-2xl font-extrabold font-heading text-slate-900 mt-1">8</div>
+              <span class="text-[11px] text-slate-500 mt-0.5 block">Presupuesto en Soles</span>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
+              <i class="fas fa-rocket"></i>
+            </div>
+          </div>
+
+          <!-- Estado de Semáforos -->
+          <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-2">Desglose Semáforos</span>
+            <div class="grid grid-cols-4 gap-1 text-center">
+              <div class="bg-emerald-50 rounded-lg p-1 border border-emerald-100">
+                <span id="dash-badge-cumplidos" class="font-bold text-emerald-700 text-sm block">0</span>
+                <span class="text-[9px] text-emerald-600 font-semibold">Meta</span>
+              </div>
+              <div class="bg-amber-50 rounded-lg p-1 border border-amber-100">
+                <span id="dash-badge-alerta" class="font-bold text-amber-700 text-sm block">0</span>
+                <span class="text-[9px] text-amber-600 font-semibold">Alerta</span>
+              </div>
+              <div class="bg-rose-50 rounded-lg p-1 border border-rose-100">
+                <span id="dash-badge-criticos" class="font-bold text-rose-700 text-sm block">0</span>
+                <span class="text-[9px] text-rose-600 font-semibold">Crítico</span>
+              </div>
+              <div class="bg-slate-100 rounded-lg p-1 border border-slate-200">
+                <span id="dash-badge-sindatos" class="font-bold text-slate-700 text-sm block">0</span>
+                <span class="text-[9px] text-slate-500 font-semibold">S/D</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila de Gráficos Chart.js (Radar & Tendencia Línea) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Gráfico Radar: Perspectivas BSC -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-bold text-slate-800 text-base">Desempeño por Perspectiva BSC</h3>
+                <span class="text-xs text-slate-500">Evaluación ponderada de las 4 perspectivas estratégicas</span>
+              </div>
+              <span class="text-xs bg-slate-100 text-slate-600 font-mono px-2.5 py-1 rounded-full">Radar 360°</span>
+            </div>
+            <div class="h-64 relative">
+              <canvas id="chart-radar-perspectivas"></canvas>
+            </div>
+          </div>
+
+          <!-- Gráfico Línea: Tendencia Histórica de Cumplimiento -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-bold text-slate-800 text-base">Tendencia Histórica de Cumplimiento BSC</h3>
+                <span class="text-xs text-slate-500">Evolución mensual (Mayo a Octubre 2026)</span>
+              </div>
+              <span class="text-xs bg-blue-50 text-blue-600 font-semibold px-2.5 py-1 rounded-full">Histórico 6M</span>
+            </div>
+            <div class="h-64 relative">
+              <canvas id="chart-line-tendencia"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila Secundaria de Gráficos (Doughnut Semáforos & Barras Módulos Odoo 17) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Gráfico Doughnut Semáforos -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm">
+            <h3 class="font-bold text-slate-800 text-base mb-1">Distribución de Semáforos</h3>
+            <span class="text-xs text-slate-500 block mb-4">Proporción de estados de los 14 KPIs</span>
+            <div class="h-56 relative">
+              <canvas id="chart-doughnut-semaforos"></canvas>
+            </div>
+          </div>
+
+          <!-- Gráfico Barras: Desempeño por Módulo Odoo 17 -->
+          <div class="lg:col-span-2 bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm">
+            <div class="flex items-center justify-between mb-1">
+              <h3 class="font-bold text-slate-800 text-base">Cumplimiento por Módulo de Odoo 17 ERP</h3>
+              <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">agroperuvian_db</span>
+            </div>
+            <span class="text-xs text-slate-500 block mb-4">Facturación, Ventas, Manufactura BOM, Stock, Compras y RRHH</span>
+            <div class="h-56 relative">
+              <canvas id="chart-bar-modulos"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla: Indicadores que Requieren Atención Inmediata -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
+                <h3 class="font-bold text-slate-900 text-base">Indicadores que Requieren Atención Inmediata</h3>
+              </div>
+              <span class="text-xs text-slate-500">KPIs en estado <strong>Crítico</strong> (< 75%) o <strong>En Alerta</strong> (75% - 89.9%)</span>
+            </div>
+            <button onclick="app.switchView('kpis')" class="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center space-x-1">
+              <span>Ver todos los 14 KPIs</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50/50">
+                  <th class="py-3 px-4">Indicador KPI</th>
+                  <th class="py-3 px-4">Módulo Odoo 17</th>
+                  <th class="py-3 px-4 text-right">Meta vs Actual</th>
+                  <th class="py-3 px-4 text-center">% Cumplimiento</th>
+                  <th class="py-3 px-4 text-center">Semáforo</th>
+                  <th class="py-3 px-4 text-right">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="dash-tbody-atencion" class="text-sm divide-y divide-slate-100">
+                <!-- Se inyecta dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- VISTA 2: MAPA ESTRATÉGICO INTERACTIVO (4 PERSPECTIVAS) -->
+      <!-- ======================================================== -->
+      <section id="view-mapa" class="view-section hidden space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <div>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Mapa Estratégico Interactivo</h2>
+            <p class="text-xs text-slate-500 mt-1">
+              Visualización jerárquica de las relaciones Causa-Efecto (Aprendizaje &rarr; Procesos &rarr; Cliente &rarr; Financiera) y su vinculación directa con los módulos de Odoo 17.
+            </p>
+          </div>
+          <div class="flex items-center space-x-3 text-xs">
+            <span class="flex items-center space-x-1 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> <span>Cumplido</span></span>
+            <span class="flex items-center space-x-1 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> <span>En Alerta</span></span>
+            <span class="flex items-center space-x-1 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> <span>Crítico</span></span>
+            <span class="flex items-center space-x-1 text-slate-600"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span> <span>Sin Datos</span></span>
+          </div>
+        </div>
+
+        <!-- Contenedor de las 4 Bandas de Perspectivas -->
+        <div id="mapa-perspectivas-container" class="space-y-4">
+          <!-- Renderizado dinámicamente por app.js -->
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- VISTA 3: GESTIÓN DE OBJETIVOS ESTRATÉGICOS -->
+      <!-- ======================================================== -->
+      <section id="view-objetivos" class="view-section hidden space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <div>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Objetivos Estratégicos (16)</h2>
+            <p class="text-xs text-slate-500 mt-1">Gestión integral, ponderación estratégica y alineación a módulos Odoo 17.</p>
+          </div>
+          <button onclick="app.abrirModalNuevoObjetivo()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md shadow-blue-600/20 flex items-center space-x-2 transition-all">
+            <i class="fas fa-plus"></i>
+            <span>Nuevo Objetivo</span>
+          </button>
+        </div>
+
+        <!-- Tabla de Objetivos -->
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50">
+                  <th class="py-3 px-4">Código</th>
+                  <th class="py-3 px-4">Objetivo Estratégico</th>
+                  <th class="py-3 px-4">Perspectiva BSC</th>
+                  <th class="py-3 px-4">Módulo Odoo 17</th>
+                  <th class="py-3 px-4 text-center">Ponderación</th>
+                  <th class="py-3 px-4 text-center">Avance Actual</th>
+                  <th class="py-3 px-4 text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="objetivos-table-body" class="divide-y divide-slate-100 text-sm">
+                <!-- Se inyecta dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- VISTA 4: GESTIÓN DE INDICADORES KPI -->
+      <!-- ======================================================== -->
+      <section id="view-kpis" class="view-section hidden space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <div>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Indicadores KPI (14)</h2>
+            <p class="text-xs text-slate-500 mt-1">Fórmulas, modelos técnicos de Odoo 17 (`sale.order`, `mrp.production`, etc.) y umbrales semafóricos.</p>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button class="btn-sync-odoo bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center space-x-1.5 transition-all">
+              <i class="fas fa-sync-alt"></i>
+              <span>Sync Odoo 17</span>
+            </button>
+            <button onclick="app.abrirModalNuevoKpi()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl shadow-md shadow-blue-600/20 flex items-center space-x-1.5 transition-all">
+              <i class="fas fa-plus"></i>
+              <span>Nuevo KPI</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla de KPIs -->
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50">
+                  <th class="py-3 px-4">Código</th>
+                  <th class="py-3 px-4">Nombre e Indicador</th>
+                  <th class="py-3 px-4">Módulo & Modelo Odoo</th>
+                  <th class="py-3 px-4 text-center">Sentido</th>
+                  <th class="py-3 px-4 text-right">Meta</th>
+                  <th class="py-3 px-4 text-right">Valor Obtenido</th>
+                  <th class="py-3 px-4 text-center">% Cumplimiento</th>
+                  <th class="py-3 px-4 text-center">Semáforo</th>
+                  <th class="py-3 px-4 text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="kpis-table-body" class="divide-y divide-slate-100 text-sm">
+                <!-- Se inyecta dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- VISTA 5: REGISTRO DE MEDICIONES -->
+      <!-- ======================================================== -->
+      <section id="view-mediciones" class="view-section hidden space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <div>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Registro de Mediciones y Resultados</h2>
+            <p class="text-xs text-slate-500 mt-1">Ingreso manual validado o sincronización automatizada vía XML-RPC de Odoo 17 / n8n.</p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <button onclick="app.abrirModalMedicionRapida('', '', '', '')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md flex items-center space-x-2 transition-all">
+              <i class="fas fa-plus"></i>
+              <span>Registrar Medición</span>
+            </button>
+            <button class="btn-sync-odoo bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md flex items-center space-x-2 transition-all">
+              <i class="fas fa-sync-alt"></i>
+              <span>Sincronizar Mediciones Odoo 17</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabla de Mediciones Recientes -->
+        <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+          <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="font-bold text-slate-800 text-sm">Historial de Mediciones Recientes</h3>
+            <span class="text-xs text-slate-400">Regla 6: Cada medición recalcula automáticamente el Scorecard global</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50">
+                  <th class="py-3 px-4">Período</th>
+                  <th class="py-3 px-4">Fecha</th>
+                  <th class="py-3 px-4">Indicador</th>
+                  <th class="py-3 px-4 text-right">Valor</th>
+                  <th class="py-3 px-4">Origen</th>
+                  <th class="py-3 px-4">Observaciones Odoo / ERP</th>
+                  <th class="py-3 px-4">Responsable</th>
+                  <th class="py-3 px-4 text-right">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="mediciones-table-body" class="divide-y divide-slate-100">
+                <!-- Se inyecta dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- VISTA 6: INICIATIVAS ESTRATÉGICAS -->
+      <!-- ======================================================== -->
+      <section id="view-iniciativas" class="view-section hidden space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <div>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Iniciativas y Proyectos Estratégicos (8)</h2>
+            <p class="text-xs text-slate-500 mt-1">Control presupuestal en Soles (S/), cronogramas y porcentaje de avance.</p>
+          </div>
+          <button onclick="app.abrirModalNuevaIniciativa()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md shadow-purple-600/20 flex items-center space-x-2 transition-all">
+            <i class="fas fa-plus"></i>
+            <span>Nueva Iniciativa</span>
+          </button>
+        </div>
+
+        <!-- Tarjetas Resumen de Inversión -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 block">Presupuesto Invertido</span>
+            <div id="inic-presupuesto-total" class="text-xl font-extrabold font-heading text-slate-900 mt-1">S/ 213,000</div>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 block">Avance Promedio</span>
+            <div id="inic-avance-promedio" class="text-xl font-extrabold font-heading text-blue-600 mt-1">67.5%</div>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 block">En Ejecución</span>
+            <div id="inic-count-ejecucion" class="text-xl font-extrabold font-heading text-blue-600 mt-1">5</div>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 block">Retrasadas</span>
+            <div id="inic-count-retrasadas" class="text-xl font-extrabold font-heading text-rose-600 mt-1">1</div>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 block">Finalizadas</span>
+            <div id="inic-count-finalizadas" class="text-xl font-extrabold font-heading text-emerald-600 mt-1">2</div>
+          </div>
+        </div>
+
+        <!-- Grid de Proyectos -->
+        <div id="iniciativas-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Renderizado dinámicamente -->
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- VISTA 7: REPORTES Y EXPORTACIÓN -->
+      <!-- ======================================================== -->
+      <section id="view-reportes" class="view-section hidden space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <div>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Reportes Ejecutivos BSC</h2>
+            <p class="text-xs text-slate-500 mt-1">Descarga de métricas en CSV e impresión formal con membrete corporativo.</p>
+          </div>
+          <div class="flex items-center space-x-3">
+            <button onclick="app.exportarCSV()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md flex items-center space-x-2 transition-all">
+              <i class="fas fa-file-csv text-emerald-400"></i>
+              <span>Exportar a CSV</span>
+            </button>
+            <button onclick="app.imprimirPDF()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md flex items-center space-x-2 transition-all">
+              <i class="fas fa-file-pdf"></i>
+              <span>Imprimir / Guardar PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Resumen Consolidado Oficial -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="font-bold text-slate-800 text-base">Consolidado Oficial de Cumplimiento Estratégico</h3>
+              <span class="text-xs text-slate-500">Período: <strong id="rep-periodo-badge">2026-10</strong> | Empresa: <strong>AGRO PERUVIAN FOODS S.A.C.</strong></span>
+            </div>
+            <div class="text-right">
+              <span class="text-xs text-slate-400 block">Cumplimiento Global:</span>
+              <span id="rep-global-pct" class="text-2xl font-black text-slate-900">75.95%</span>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11px] font-bold text-slate-400 uppercase tracking-wider bg-slate-50">
+                  <th class="py-2.5 px-3">Código</th>
+                  <th class="py-2.5 px-3">Indicador KPI</th>
+                  <th class="py-2.5 px-3">Perspectiva</th>
+                  <th class="py-2.5 px-3">Módulo Odoo 17</th>
+                  <th class="py-2.5 px-3 text-right">Meta</th>
+                  <th class="py-2.5 px-3 text-right">Obtenido</th>
+                  <th class="py-2.5 px-3 text-center">% Cumpl.</th>
+                  <th class="py-2.5 px-3 text-center">Semáforo</th>
+                </tr>
+              </thead>
+              <tbody id="rep-kpis-table-body" class="divide-y divide-slate-100">
+                <!-- Se inyecta dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- VISTA 8: MÓDULOS ODOO 17 & ADMINISTRACIÓN -->
+      <!-- ======================================================== -->
+      <section id="view-admin" class="view-section hidden space-y-6">
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+          <h2 class="font-heading font-extrabold text-2xl text-slate-900">Administración y Módulos ERP Odoo 17</h2>
+          <p class="text-xs text-slate-500 mt-1">Configuración del conector Odoo 17 XML-RPC, gestión de períodos y usuarios demostrativos.</p>
+        </div>
+
+        <!-- Panel Diagnóstico Odoo 17 & n8n -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="font-bold text-slate-800 text-sm mb-3">Diagnóstico de Conectividad Odoo 17 & Webhooks</h3>
+          <div id="diag-odoo-status" class="mb-4">
+            <!-- Inyectado dinámicamente -->
+          </div>
+          <button class="btn-sync-odoo text-xs bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold px-4 py-2 rounded-xl transition-colors">
+            <i class="fas fa-plug mr-1.5"></i> Probar Conexión XML-RPC en Vivo
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Usuarios y Roles -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+            <h3 class="font-bold text-slate-800 text-sm mb-3">Usuarios y Roles de Demostración</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead>
+                  <tr class="border-b border-slate-200 text-[10px] uppercase font-bold text-slate-400">
+                    <th class="py-2 px-3">Usuario</th>
+                    <th class="py-2 px-3">Nombre</th>
+                    <th class="py-2 px-3">Rol</th>
+                    <th class="py-2 px-3">Área</th>
+                    <th class="py-2 px-3 text-right">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-users-table-body" class="divide-y divide-slate-100">
+                  <!-- Inyectado dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Períodos de Evaluación -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+            <h3 class="font-bold text-slate-800 text-sm mb-3">Períodos de Evaluación</h3>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead>
+                  <tr class="border-b border-slate-200 text-[10px] uppercase font-bold text-slate-400">
+                    <th class="py-2 px-3">Código</th>
+                    <th class="py-2 px-3">Nombre</th>
+                    <th class="py-2 px-3 text-center">Estado</th>
+                    <th class="py-2 px-3 text-right">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-periodos-table-body" class="divide-y divide-slate-100">
+                  <!-- Inyectado dinámicamente -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Módulos Odoo 17 Registrados -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="font-bold text-slate-800 text-sm mb-3">Módulos Odoo 17 y Modelos Técnicos Vinculados</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-slate-200 text-[10px] uppercase font-bold text-slate-400">
+                  <th class="py-2 px-3">Código</th>
+                  <th class="py-2 px-3">Módulo Odoo</th>
+                  <th class="py-2 px-3">Modelo Técnico</th>
+                  <th class="py-2 px-3">Responsable en Odoo</th>
+                </tr>
+              </thead>
+              <tbody id="admin-modulos-table-body" class="divide-y divide-slate-100">
+                <!-- Inyectado dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODALES DE LA APLICACIÓN -->
+  <!-- ======================================================== -->
+
+  <!-- Modal 1: Detalle de Objetivo & Causa-Efecto -->
+  <div id="modal-detalle-objetivo" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <div class="flex items-center space-x-2">
+          <span id="mod-obj-codigo" class="font-mono text-xs font-bold bg-blue-100 text-blue-700 px-2.5 py-1 rounded-lg">OBJ-01</span>
+          <span id="mod-obj-perspectiva" class="text-xs font-semibold text-slate-500 uppercase">Perspectiva</span>
+        </div>
+        <button onclick="document.getElementById('modal-detalle-objetivo').classList.add('hidden')" class="text-slate-400 hover:text-slate-600 p-1"><i class="fas fa-times text-lg"></i></button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-5 flex-1">
+        <div>
+          <h3 id="mod-obj-nombre" class="font-heading font-extrabold text-xl text-slate-900 mb-2">Nombre del Objetivo</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs">
+            <div>
+              <span class="text-slate-400 block">Módulo Odoo:</span>
+              <strong id="mod-obj-modulo" class="text-slate-700 truncate block">Odoo</strong>
+            </div>
+            <div>
+              <span class="text-slate-400 block">Avance Ponderado:</span>
+              <strong id="mod-obj-avance" class="text-blue-600 font-extrabold text-sm block">0%</strong>
+            </div>
+            <div>
+              <span class="text-slate-400 block">Ponderación BSC:</span>
+              <strong id="mod-obj-ponderacion" class="text-slate-700 block">25%</strong>
+            </div>
+            <div>
+              <span class="text-slate-400 block">Responsable:</span>
+              <strong id="mod-obj-responsable" class="text-slate-700 truncate block">Equipo</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Causa - Efecto -->
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-wider text-slate-500 mb-2">Relación Causa-Efecto</h4>
+          <div id="mod-obj-causa-efecto"></div>
+        </div>
+
+        <!-- KPIs Asociados -->
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-wider text-slate-500 mb-2">Indicadores KPI Vinculados</h4>
+          <div id="mod-obj-kpis-list" class="space-y-2"></div>
+        </div>
+
+        <!-- Iniciativas Vinculadas -->
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-wider text-slate-500 mb-2">Iniciativas y Proyectos en Curso</h4>
+          <div id="mod-obj-iniciativas-list" class="space-y-2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Formulario Objetivo -->
+  <div id="modal-form-objetivo" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <h3 id="modal-objetivo-title" class="font-heading font-bold text-lg text-slate-900">Nuevo Objetivo Estratégico</h3>
+        <button onclick="document.getElementById('modal-form-objetivo').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
+      </div>
+
+      <form onsubmit="app.guardarObjetivo(event)" class="space-y-3.5 text-xs">
+        <input type="hidden" id="form-objetivo-id">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Código Único (ej. OBJ-FIN-05):</label>
+            <input type="text" id="form-objetivo-codigo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Perspectiva BSC:</label>
+            <select id="form-objetivo-perspectiva" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="FINANCIERA">Perspectiva Financiera</option>
+              <option value="CLIENTE">Perspectiva del Cliente</option>
+              <option value="PROCESOS_INTERNOS">Perspectiva de Procesos Internos</option>
+              <option value="APRENDIZAJE">Perspectiva de Aprendizaje</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Nombre del Objetivo:</label>
+          <input type="text" id="form-objetivo-nombre" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Descripción Estratégica:</label>
+          <textarea id="form-objetivo-descripcion" rows="2" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Módulo Odoo 17:</label>
+            <select id="form-objetivo-modulo" class="module-select-sync w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Ponderación (%) en Perspectiva:</label>
+            <input type="number" id="form-objetivo-ponderacion" step="0.1" min="1" max="100" value="25" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Responsable:</label>
+            <input type="text" id="form-objetivo-responsable" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Prioridad:</label>
+            <select id="form-objetivo-prioridad" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="Alta">Alta</option>
+              <option value="Media" selected>Media</option>
+              <option value="Baja">Baja</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-3 flex justify-end space-x-2">
+          <button type="button" onclick="document.getElementById('modal-form-objetivo').classList.add('hidden')" class="px-4 py-2 border rounded-xl font-semibold text-slate-600 hover:bg-slate-50">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-md">Guardar Objetivo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Formulario KPI -->
+  <div id="modal-form-kpi" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-xl w-full p-6 animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <h3 class="font-heading font-bold text-lg text-slate-900">Configuración de Indicador KPI</h3>
+        <button onclick="document.getElementById('modal-form-kpi').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
+      </div>
+
+      <form onsubmit="app.guardarKpi(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="form-kpi-id">
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Código (ej. FIN-05):</label>
+            <input type="text" id="form-kpi-codigo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div class="col-span-2">
+            <label class="font-semibold text-slate-700 block mb-1">Objetivo Estratégico Vinculado:</label>
+            <select id="form-kpi-objetivo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Nombre del Indicador:</label>
+          <input type="text" id="form-kpi-nombre" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Fórmula de Cálculo:</label>
+          <input type="text" id="form-kpi-formula" placeholder="ej. (Ventas / Meta) * 100" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Módulo Odoo 17:</label>
+            <input type="text" id="form-kpi-modulo" placeholder="ej. Facturación (account)" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Modelo Técnico Odoo 17:</label>
+            <input type="text" id="form-kpi-modelo" placeholder="ej. account.move" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Sentido de Meta:</label>
+            <select id="form-kpi-sentido" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="MAYOR_MEJOR">Mayor es Mejor</option>
+              <option value="MENOR_MEJOR">Menor es Mejor</option>
+              <option value="RANGO">Rango Específico</option>
+            </select>
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Meta Numérica:</label>
+            <input type="number" id="form-kpi-meta" step="any" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Unidad de Medida:</label>
+            <select id="form-kpi-unidad" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="%">% (Porcentaje)</option>
+              <option value="S/">S/ (Soles)</option>
+              <option value="Kg">Kg (Kilogramos)</option>
+              <option value="Unidades">Unidades</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+          <div>
+            <label class="font-semibold text-emerald-700 block mb-1">Umbral Verde (Cumplido >= %):</label>
+            <input type="number" id="form-kpi-umbral-verde" value="90" step="1" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-amber-700 block mb-1">Umbral Amarillo (Alerta >= %):</label>
+            <input type="number" id="form-kpi-umbral-amarillo" value="75" step="1" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Responsable en Planta / Comercial:</label>
+          <input type="text" id="form-kpi-responsable" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div class="pt-3 flex justify-end space-x-2">
+          <button type="button" onclick="document.getElementById('modal-form-kpi').classList.add('hidden')" class="px-4 py-2 border rounded-xl font-semibold text-slate-600 hover:bg-slate-50">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-md">Guardar Indicador</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Historial de KPI (Gráfico de Evolución) -->
+  <div id="modal-kpi-historial" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span id="hist-kpi-codigo" class="font-mono text-xs font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded">FIN-01</span>
+            <h3 id="hist-kpi-nombre" class="font-heading font-bold text-base text-slate-900">Evolución Histórica</h3>
+          </div>
+          <span id="hist-kpi-modulo" class="text-xs text-slate-500 block mt-0.5">Módulo Odoo</span>
+        </div>
+        <button onclick="document.getElementById('modal-kpi-historial').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times text-lg"></i></button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-6 flex-1">
+        <!-- Gráfico Chart.js Histórico -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-700">Tendencia de Medición vs Meta</span>
+            <span class="text-xs text-slate-500">Meta: <strong id="hist-kpi-meta" class="text-emerald-700 font-bold">100</strong></span>
+          </div>
+          <div class="h-60 relative">
+            <canvas id="chart-kpi-historial"></canvas>
+          </div>
+        </div>
+
+        <!-- Tabla de Mediciones Históricas -->
+        <div>
+          <h4 class="font-bold text-xs uppercase tracking-wider text-slate-500 mb-2">Histórico de Registros</h4>
+          <div class="border border-slate-200 rounded-2xl overflow-hidden">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="bg-slate-50 text-[10px] uppercase font-bold text-slate-400 border-b border-slate-200">
+                  <th class="py-2 px-3">Período</th>
+                  <th class="py-2 px-3">Fecha</th>
+                  <th class="py-2 px-3 text-right">Valor Obtenido</th>
+                  <th class="py-2 px-3">Origen</th>
+                  <th class="py-2 px-3">Observaciones</th>
+                </tr>
+              </thead>
+              <tbody id="hist-kpi-table-body" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Registro Rápido de Medición -->
+  <div id="modal-registro-medicion" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <h3 class="font-heading font-bold text-lg text-slate-900">Registrar Medición de KPI</h3>
+        <button onclick="document.getElementById('modal-registro-medicion').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
+      </div>
+
+      <form onsubmit="app.guardarMedicion(event)" class="space-y-3.5 text-xs">
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Seleccione Indicador KPI:</label>
+          <select id="form-med-kpi" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Período de Evaluación:</label>
+            <select id="form-med-periodo" class="period-select-sync w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Fecha de Medición:</label>
+            <input type="date" id="form-med-fecha" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Valor Obtenido:</label>
+          <input type="number" id="form-med-valor" step="any" required placeholder="ej. 24500 o 4.8" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-base font-bold text-slate-900">
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Observaciones / Glosa Operativa:</label>
+          <textarea id="form-med-observaciones" rows="2" placeholder="ej. Conforme según reporte de cierre de producción planta Satipo..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Responsable del Registro:</label>
+          <input type="text" id="form-med-responsable" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div class="pt-3 flex justify-end space-x-2">
+          <button type="button" onclick="document.getElementById('modal-registro-medicion').classList.add('hidden')" class="px-4 py-2 border rounded-xl font-semibold text-slate-600 hover:bg-slate-50">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md">Guardar y Recalcular BSC</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 6: Formulario Iniciativa -->
+  <div id="modal-form-iniciativa" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <h3 class="font-heading font-bold text-lg text-slate-900">Iniciativa Estratégica</h3>
+        <button onclick="document.getElementById('modal-form-iniciativa').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
+      </div>
+
+      <form onsubmit="app.guardarIniciativa(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="form-inic-id">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Código (ej. INI-09):</label>
+            <input type="text" id="form-inic-codigo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Estado del Proyecto:</label>
+            <select id="form-inic-estado" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="EN_EJECUCION">En Ejecución</option>
+              <option value="RETRASADA">Retrasada</option>
+              <option value="FINALIZADA">Finalizada</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Objetivo Estratégico Asociado:</label>
+          <select id="form-inic-objetivo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Nombre de la Iniciativa:</label>
+          <input type="text" id="form-inic-nombre" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        </div>
+
+        <div>
+          <label class="font-semibold text-slate-700 block mb-1">Descripción / Alcance:</label>
+          <textarea id="form-inic-descripcion" rows="2" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Presupuesto en Soles (S/):</label>
+            <input type="number" id="form-inic-presupuesto" step="100" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Porcentaje de Avance (%):</label>
+            <input type="number" id="form-inic-avance" min="0" max="100" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Módulo Odoo 17:</label>
+            <input type="text" id="form-inic-modulo" placeholder="ej. Manufactura BOM (mrp)" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Líder Responsable:</label>
+            <input type="text" id="form-inic-responsable" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+        </div>
+
+        <div class="pt-3 flex justify-end space-x-2">
+          <button type="button" onclick="document.getElementById('modal-form-iniciativa').classList.add('hidden')" class="px-4 py-2 border rounded-xl font-semibold text-slate-600 hover:bg-slate-50">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold shadow-md">Guardar Iniciativa</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 7: Sincronización Odoo 17 Status -->
+  <div id="modal-sync-odoo-status" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+        <div class="flex items-center space-x-2">
+          <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+          <h3 class="font-heading font-bold text-base text-slate-900">Sincronización Odoo 17 ERP (agroperuvian_db)</h3>
+        </div>
+        <button onclick="document.getElementById('modal-sync-odoo-status').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
+      </div>
+
+      <div id="sync-odoo-logs" class="space-y-3">
+        <!-- Inyectado dinámicamente -->
+      </div>
+
+      <div class="mt-5 text-right">
+        <button onclick="document.getElementById('modal-sync-odoo-status').classList.add('hidden')" class="px-4 py-2 bg-slate-800 text-white font-bold text-xs rounded-xl hover:bg-slate-900">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor de Toasts Flotantes -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-2 pointer-events-none max-w-md"></div>
+
+  <!-- Scripts de la Aplicación -->
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/state.js"></script>
+  <script src="/static/js/charts.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

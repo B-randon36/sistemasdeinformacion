@@ -1,0 +1,133 @@
+/* Estilos personalizados Balanced Scorecard - AGRO PERUVIAN FOODS S.A.C. */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary-navy: #0f172a;
+  --primary-slate: #1e293b;
+  --accent-cacao: #6d4c41;
+  --accent-coco: #059669;
+  --accent-gold: #d97706;
+  --status-green: #10b981;
+  --status-yellow: #f59e0b;
+  --status-red: #ef4444;
+  --status-gray: #94a3b8;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Glassmorphism sutil */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.6);
+}
+
+/* Semáforos con pulso sutil */
+.pulse-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Estilos de Impresión / Guardar PDF */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+  }
+  
+  #sidebar, #top-bar, .no-print, button, .action-buttons {
+    display: none !important;
+  }
+  
+  #main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+
+  .card, .glass-panel {
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    margin-bottom: 1.5rem !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th, td {
+    border: 1px solid #e2e8f0 !important;
+    padding: 6px 10px !important;
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+/* Transiciones fluidas */
+.sidebar-link {
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+  background-color: rgba(59, 130, 246, 0.12);
+  color: #3b82f6;
+  border-right: 3px solid #3b82f6;
+}
+
+/* Efecto de tarjetas del mapa estratégico */
+.map-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.map-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
