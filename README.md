@@ -21,8 +21,8 @@ Todos los **Objetivos Estratégicos (16)**, **Indicadores KPI (14)**, **Medicion
 ## ⚙️ 2. Arquitectura de Software
 
 - **Backend:** FastAPI (Python 3.13) con arquitectura modular (`app/database.py`, `app/models.py`, `app/schemas.py`, `app/services/bsc_engine.py`, `app/services/odoo_connector.py`, `app/routers/`).
-- **Base de Datos:** SQLAlchemy 2.0 con soporte relacional SQLite local y conmutación automática de contingencia.
-- **Integración Odoo 17:** Conector XML-RPC nativo hacia `http://odoo:8069` (`agroperuvian_db`) con timeout de 3.0s y motor resiliente de contingencia que extrae métricas de `sale.order`, `crm.lead`, `mrp.production`, `pos.session` y `purchase.order`.
+- **Base de Datos:** SQLAlchemy 2.0 con soporte relacional SQLite local (`agroperuvian_bsc.db`) y conmutación automática de contingencia.
+- **Integración Odoo 17:** Conector XML-RPC nativo hacia `http://localhost:8069` o `http://odoo:8069` (`agroperuvian_db`) con timeout de 3.0s y motor resiliente de contingencia que extrae métricas de `sale.order`, `crm.lead`, `mrp.production`, `pos.session` y `purchase.order`.
 - **Frontend SPA:** Single Page Application construida con Tailwind CSS, Chart.js 4.4, FontAwesome 6, Google Fonts (Inter & Outfit), diseño responsive con dark mode corporativo y soporte de exportación a CSV y PDF (`@media print`).
 
 ---
@@ -59,15 +59,53 @@ Todos los **Objetivos Estratégicos (16)**, **Indicadores KPI (14)**, **Medicion
 
 ---
 
-## 🚀 5. Puesta en Marcha
+## 🚀 5. Guía de Inicialización y Ejecución
 
-```bash
-# 1. Instalar dependencias
-pip install -r requirements.txt
+### Opción A: Ejecutar en el Servidor AWS EC2 (Puerto 8000)
 
-# 2. Iniciar servidor FastAPI
-python -m uvicorn main:app --host 0.0.0.0 --port 8001 --reload
-```
+1. **Conectarse al servidor por SSH:**
+   ```bash
+   ssh -i "awz-ccalla.pem" ubuntu@<IP_PUBLICA_EC2>
+   ```
 
-Acceder a la aplicación web en: **`http://localhost:8001/`**
-Documentación Swagger interactiva: **`http://localhost:8001/docs`**
+2. **Ingresar a la carpeta del proyecto y activar el entorno:**
+   ```bash
+   cd ~/bsc-agroperuvian
+   source venv/bin/activate
+   ```
+
+3. **Verificar el archivo `.env`:**
+   Asegúrate de que tenga el puerto 8000 configurado:
+   ```env
+   PORT=8000
+   DATABASE_URL=sqlite:///./agroperuvian_bsc.db
+   ODOO_URL=http://localhost:8069
+   ODOO_DB=agroperuvian_db
+   ODOO_USER=admin@agroperuvian.pe
+   ODOO_PASSWORD=admin_odoo_secure_2026
+   ```
+
+4. **Encender la aplicación en primer plano:**
+   ```bash
+   python -m uvicorn main:app --host 0.0.0.0 --port 8000
+   ```
+   *Acceso web:* `http://<IP_PUBLICA_EC2>:8000`  
+   *(Para detener la aplicación, presiona `Ctrl + C` en la terminal).*
+
+---
+
+### Opción B: Ejecutar en tu Computadora Local (Puerto 8001)
+
+1. **Instalar dependencias:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Iniciar servidor:**
+   ```bash
+   python -m uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+   ```
+
+3. **Acceder:**
+   - Aplicación Web: `http://localhost:8001/`
+   - Documentación Swagger API: `http://localhost:8001/docs`
