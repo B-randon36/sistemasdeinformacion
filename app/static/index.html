@@ -24,7 +24,8 @@
             brand: {
               navy: '#0f172a',
               slate: '#1e293b',
-              cacao: '#6d4c41',
+              cacao: '#3D2314',
+              selva: '#2D5A27',
               coco: '#059669',
               gold: '#d97706'
             }
@@ -52,13 +53,13 @@
   <aside id="sidebar" class="w-72 bg-brand-navy text-slate-300 flex-shrink-0 flex flex-col justify-between border-r border-slate-800 z-30 select-none">
     <div>
       <!-- Brand Header -->
-      <div class="p-6 border-b border-slate-800/80 flex items-center space-x-3.5">
-        <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-amber-500 flex items-center justify-center text-white shadow-lg shadow-emerald-900/30">
+      <div class="p-6 border-b border-slate-800/80 flex items-center space-x-3.5" style="background: linear-gradient(135deg, rgba(61,35,20,0.45), rgba(45,90,39,0.25));">
+        <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-white shadow-lg" style="background: linear-gradient(135deg, #3D2314, #2D5A27);">
           <i class="fas fa-seedling text-xl"></i>
         </div>
         <div>
           <h1 class="font-heading font-extrabold text-white text-base leading-tight tracking-wide">AGRO PERUVIAN</h1>
-          <p class="text-[11px] font-semibold text-emerald-400 tracking-wider uppercase">Foods S.A.C. &bull; Odoo 17</p>
+          <p class="text-[11px] font-semibold text-emerald-400 tracking-wider uppercase">Foods S.A.C. &bull; RUC 20608976541</p>
         </div>
       </div>
 
@@ -177,6 +178,12 @@
 
       <!-- Action CTAs -->
       <div class="flex items-center space-x-3">
+        <!-- Botón de regreso rápido a Odoo 17 ERP -->
+        <a id="btn-volver-odoo" href="#" onclick="app.volverAOdoo(event)" class="text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-sm flex items-center space-x-2 transition-all hover:opacity-90" style="background: linear-gradient(135deg, #3D2314, #2D5A27);">
+          <i class="fas fa-arrow-left"></i>
+          <span>Volver a Odoo 17 ERP</span>
+        </a>
+
         <!-- Botón Sincronizar Mediciones Odoo 17 -->
         <button class="btn-sync-odoo bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-md shadow-emerald-600/20 flex items-center space-x-2 transition-all">
           <i class="fas fa-sync-alt"></i>
@@ -191,9 +198,9 @@
 
     <!-- Printable Header (Visible only when printing) -->
     <div class="print-only p-6 border-b border-slate-300">
-      <h1 class="text-2xl font-bold text-slate-900">AGRO PERUVIAN FOODS S.A.C.</h1>
-      <h2 class="text-base text-slate-600 font-medium">Reporte Oficial de Balanced Scorecard (Cuadro de Mando Integral)</h2>
-      <p class="text-xs text-slate-500 mt-1">Integración ERP Odoo 17 (agroperuvian_db) &bull; Fecha de Emisión: 2026-10-26</p>
+      <h1 class="text-2xl font-bold text-slate-900">AGRO PERUVIAN FOODS S.A.C. (RUC: 20608976541)</h1>
+      <h2 class="text-base text-slate-600 font-medium">Reporte Oficial de Balanced Scorecard &mdash; "Transformando la riqueza del cacao y coco peruano"</h2>
+      <p class="text-xs text-slate-500 mt-1">Carretera Marginal km 4.5, Satipo, Junín, Perú &bull; Integración ERP Odoo 17 (agroperuvian_db)</p>
     </div>
 
     <!-- Contenedor Dinámico de Vistas -->

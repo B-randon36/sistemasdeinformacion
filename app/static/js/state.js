@@ -1,6 +1,14 @@
 // Gestión de Estado Global - AGRO PERUVIAN FOODS S.A.C.
+let _savedUser = null;
+try {
+  const raw = localStorage.getItem('agro_bsc_user');
+  _savedUser = raw && raw !== 'undefined' ? JSON.parse(raw) : null;
+} catch (e) {
+  localStorage.removeItem('agro_bsc_user');
+}
+
 const state = {
-  currentUser: JSON.parse(localStorage.getItem('agro_bsc_user')) || null,
+  currentUser: _savedUser,
   token: localStorage.getItem('agro_bsc_token') || null,
   activePeriod: '2026-10',
   periods: [],

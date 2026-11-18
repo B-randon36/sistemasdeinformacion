@@ -1148,7 +1148,15 @@ const app = {
   logout() {
     state.setUser(null, null);
     state.showToast('Sesión cerrada. Seleccione una cuenta demo para continuar.', 'info');
-    document.getElementById('modal-login-demo').classList.remove('hidden');
+    const loginModal = document.getElementById('modal-login-demo');
+    if (loginModal) loginModal.classList.remove('hidden');
+  },
+
+  volverAOdoo(e) {
+    if (e) e.preventDefault();
+    const host = window.location.hostname || 'localhost';
+    const odooUrl = `${window.location.protocol}//${host}:8069/web`;
+    window.open(odooUrl, '_blank');
   },
 
   // Helper visual Semáforos
