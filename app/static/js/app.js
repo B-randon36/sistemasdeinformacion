@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 const app = {
   async init() {
     this.bindEvents();
+    const btnOdoo = document.getElementById('btn-volver-odoo');
+    if (btnOdoo && window.location.hostname) {
+      btnOdoo.href = `${window.location.protocol}//${window.location.hostname}:8069/web`;
+    }
     await this.loadInitialCatalogs();
 
     // Si no hay usuario logueado, usar por defecto el Admin demostrativo
