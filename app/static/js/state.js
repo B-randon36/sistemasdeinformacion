@@ -1,4 +1,4 @@
-// Gestión de Estado Global - AGRO PERUVIAN FOODS S.A.C.
+// Gestión de Estado Global - AGRO PERUVIAN FOODS
 let _savedUser = null;
 try {
   const raw = localStorage.getItem('agro_bsc_user');
