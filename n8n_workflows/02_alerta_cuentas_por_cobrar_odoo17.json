@@ -1,0 +1,241 @@
+{
+  "name": "Monitor Unpaid Credit Invoices in Odoo 17",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 8 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "b2c3d4e5-0002-4000-8000-000000000001",
+      "name": "Schedule Weekdays 08:30",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        240
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b2c3d4e5-0002-4000-8000-000000000002",
+      "name": "Run Manual Check",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "account.move",
+        "operation": "getAll",
+        "returnAll": false,
+        "limit": 100,
+        "options": {
+          "fieldsList": [
+            "name",
+            "partner_id",
+            "invoice_date",
+            "invoice_date_due",
+            "amount_total",
+            "amount_residual",
+            "payment_state",
+            "journal_id"
+          ]
+        },
+        "filterRequest": {
+          "filter": [
+            {
+              "fieldName": "move_type",
+              "operator": "equal",
+              "value": "out_invoice"
+            },
+            {
+              "fieldName": "state",
+              "operator": "equal",
+              "value": "posted"
+            },
+            {
+              "fieldName": "payment_state",
+              "operator": "notEqual",
+              "value": "paid"
+            }
+          ]
+        }
+      },
+      "id": "b2c3d4e5-0002-4000-8000-000000000003",
+      "name": "Fetch Unpaid Invoices from Odoo 17",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        520,
+        320
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "notes": "Selecciona tu credencial de Odoo 17 ya existente en el desplegable Credential to connect with. No sobrescribe nada."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-saldo",
+              "leftValue": "={{ Number($('Fetch Unpaid Invoices from Odoo 17').item.json.amount_residual || 0) }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b2c3d4e5-0002-4000-8000-000000000004",
+      "name": "Filter Positive Balance",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        780,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cxc-comprobante",
+              "name": "comprobante",
+              "value": "={{ $('Fetch Unpaid Invoices from Odoo 17').item.json.name }}",
+              "type": "string"
+            },
+            {
+              "id": "cxc-cliente",
+              "name": "cliente",
+              "value": "={{ Array.isArray($('Fetch Unpaid Invoices from Odoo 17').item.json.partner_id) ? $('Fetch Unpaid Invoices from Odoo 17').item.json.partner_id[1] : 'Cliente' }}",
+              "type": "string"
+            },
+            {
+              "id": "cxc-saldo",
+              "name": "saldo_pendiente_pen",
+              "value": "={{ Number($('Fetch Unpaid Invoices from Odoo 17').item.json.amount_residual || 0) }}",
+              "type": "number"
+            },
+            {
+              "id": "cxc-dias",
+              "name": "dias_para_vencer",
+              "value": "={{ $('Fetch Unpaid Invoices from Odoo 17').item.json.invoice_date_due ? Math.ceil(DateTime.fromISO($('Fetch Unpaid Invoices from Odoo 17').item.json.invoice_date_due).diffNow('days').days) : 0 }}",
+              "type": "number"
+            },
+            {
+              "id": "cxc-mensaje",
+              "name": "mensaje_cobranza",
+              "value": "={{ (() => {\n  const inv = $('Fetch Unpaid Invoices from Odoo 17').item.json;\n  const cli = Array.isArray(inv.partner_id) ? inv.partner_id[1] : 'Cliente';\n  const due = inv.invoice_date_due || 'Sin fecha';\n  const dias = inv.invoice_date_due ? Math.ceil(DateTime.fromISO(inv.invoice_date_due).diffNow('days').days) : 0;\n  const estado = dias < 0 ? `VENCIDA hace ${Math.abs(dias)} día(s)` : `Vence en ${dias} día(s) (${due})`;\n  return `Estimado cliente ${cli}, le recordamos el comprobante ${inv.name} con saldo pendiente de S/ ${Number(inv.amount_residual).toFixed(2)}. Estado: ${estado}. — AGRO PERUVIAN FOODS S.A.C.`;\n})() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b2c3d4e5-0002-4000-8000-000000000005",
+      "name": "Prepare Collection Reminder",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        240
+      ],
+      "notes": "Listo para enviar por tu nodo de Gmail/WhatsApp o registrar seguimiento de cartera (KPI FIN-04)."
+    },
+    {
+      "parameters": {
+        "content": "### Seleccionar Credencial Odoo\nAbre el nodo **Fetch Unpaid Invoices from Odoo 17** y elige tu credencial de Odoo ya creada.",
+        "height": 140,
+        "width": 260,
+        "color": 5
+      },
+      "id": "b2c3d4e5-0002-4000-8000-000000000006",
+      "name": "Sticky Note Odoo Cred",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        460,
+        120
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Weekdays 08:30": {
+      "main": [
+        [
+          {
+            "node": "Fetch Unpaid Invoices from Odoo 17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Manual Check": {
+      "main": [
+        [
+          {
+            "node": "Fetch Unpaid Invoices from Odoo 17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Unpaid Invoices from Odoo 17": {
+      "main": [
+        [
+          {
+            "node": "Filter Positive Balance",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Positive Balance": {
+      "main": [
+        [
+          {
+            "node": "Prepare Collection Reminder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Lima"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

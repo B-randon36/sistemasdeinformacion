@@ -85,7 +85,7 @@ class Odoo17Connector:
         model_name: str,
         domain: list,
         fields: list,
-        limit: int = 200
+        limit: int = 500
     ) -> Optional[list]:
         """Ejecuta search_read en Odoo 17 de forma segura sin romper el flujo si el módulo no existe."""
         try:

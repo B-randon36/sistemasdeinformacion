@@ -1,0 +1,246 @@
+{
+  "name": "Sync Odoo 17 to Balanced Scorecard and Alert Critical KPIs",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 18 * * *"
+            }
+          ]
+        }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Schedule Daily 18:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        240
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "a1b2c3d4-0001-4000-8000-000000000002",
+      "name": "Run Manual Demo",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://52.86.231.75:8000/api/v1/bsc/sync-odoo?periodo=2026-10",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000003",
+      "name": "Sync BSC from Odoo 17",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        320
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000,
+      "notes": "Dispara la sincronización XML-RPC en vivo desde Odoo 17 hacia el Balanced Scorecard sin tocar tus webhooks ni credenciales existentes."
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "http://52.86.231.75:8000/api/v1/dashboard/metrics?periodo=2026-10",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000004",
+      "name": "Fetch Executive Dashboard Metrics",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        740,
+        320
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-criticos",
+              "leftValue": "={{ $('Fetch Executive Dashboard Metrics').item.json.total_criticos }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000005",
+      "name": "Check Critical KPIs",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        980,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "field-asunto",
+              "name": "asunto",
+              "value": "={{ 'ALERTA BSC - AGRO PERUVIAN FOODS: ' + $('Fetch Executive Dashboard Metrics').item.json.total_criticos + ' KPI(s) Crítico(s)' }}",
+              "type": "string"
+            },
+            {
+              "id": "field-global",
+              "name": "cumplimiento_global",
+              "value": "={{ $('Fetch Executive Dashboard Metrics').item.json.cumplimiento_global }}",
+              "type": "number"
+            },
+            {
+              "id": "field-mensaje",
+              "name": "mensaje_alerta",
+              "value": "={{ (() => {\n  // Arma el resumen gerencial de KPIs críticos y en alerta\n  const dash = $('Fetch Executive Dashboard Metrics').item.json;\n  const sync = $('Sync BSC from Odoo 17').item.json;\n  const lista = (dash.indicadores_atencion || [])\n    .map(k => `- [${k.codigo}] ${k.nombre}: ${k.valor_actual ?? 'S/D'} ${k.unidad} (Meta: ${k.meta} ${k.unidad}) -> ${k.semaforo}`)\n    .join('\\n');\n  return `Sincronización Odoo 17 (${sync.origen}) completada.\\nCumplimiento Global BSC: ${dash.cumplimiento_global}%\\nCríticos: ${dash.total_criticos} | En Alerta: ${dash.total_alerta} | Cumplidos: ${dash.total_cumplidos}\\n\\nIndicadores que requieren atención:\\n${lista}`;\n})() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000006",
+      "name": "Format Critical Alert Summary",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1240,
+        220
+      ],
+      "notes": "Conecta aquí tu nodo de Gmail, Telegram o WhatsApp ya configurado usando {{ $('Format Critical Alert Summary').item.json.mensaje_alerta }}."
+    },
+    {
+      "parameters": {},
+      "id": "a1b2c3d4-0001-4000-8000-000000000007",
+      "name": "All KPIs Healthy",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Conectar Notificación\nConecta aquí tu nodo ya autenticado (Gmail, Telegram o WhatsApp) y usa `asunto` y `mensaje_alerta`.",
+        "height": 140,
+        "width": 260,
+        "color": 4
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000008",
+      "name": "Sticky Note Notification",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        60
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Daily 18:00": {
+      "main": [
+        [
+          {
+            "node": "Sync BSC from Odoo 17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Manual Demo": {
+      "main": [
+        [
+          {
+            "node": "Sync BSC from Odoo 17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync BSC from Odoo 17": {
+      "main": [
+        [
+          {
+            "node": "Fetch Executive Dashboard Metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Executive Dashboard Metrics": {
+      "main": [
+        [
+          {
+            "node": "Check Critical KPIs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Critical KPIs": {
+      "main": [
+        [
+          {
+            "node": "Format Critical Alert Summary",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "All KPIs Healthy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Lima"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}
