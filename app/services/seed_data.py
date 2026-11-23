@@ -55,14 +55,15 @@ def precargar_datos_si_vacio(db: Session):
     db.add_all(usuarios_demo)
     db.commit()
 
-    # 2. PERIODOS DE EVALUACION (Mayo a Octubre 2026)
+    # 2. PERIODOS DE EVALUACION (Mayo a Noviembre 2026)
     periodos_demo = [
         Periodo(codigo="2026-05", nombre="Mayo 2026", activo=False, fecha_inicio="2026-05-01", fecha_fin="2026-05-31"),
         Periodo(codigo="2026-06", nombre="Junio 2026", activo=False, fecha_inicio="2026-06-01", fecha_fin="2026-06-30"),
         Periodo(codigo="2026-07", nombre="Julio 2026", activo=False, fecha_inicio="2026-07-01", fecha_fin="2026-07-31"),
         Periodo(codigo="2026-08", nombre="Agosto 2026", activo=False, fecha_inicio="2026-08-01", fecha_fin="2026-08-31"),
         Periodo(codigo="2026-09", nombre="Setiembre 2026", activo=False, fecha_inicio="2026-09-01", fecha_fin="2026-09-30"),
-        Periodo(codigo="2026-10", nombre="Octubre 2026 (Período Actual)", activo=True, fecha_inicio="2026-10-01", fecha_fin="2026-10-31"),
+        Periodo(codigo="2026-10", nombre="Octubre 2026", activo=False, fecha_inicio="2026-10-01", fecha_fin="2026-10-31"),
+        Periodo(codigo="2026-11", nombre="Noviembre 2026 (Período Actual)", activo=True, fecha_inicio="2026-11-01", fecha_fin="2026-11-30"),
     ]
     db.add_all(periodos_demo)
     db.commit()
@@ -623,27 +624,27 @@ def precargar_datos_si_vacio(db: Session):
     # Mapeo de KPIs para mediciones e iniciativas
     kpis_db = {k.codigo: k for k in db.query(IndicadorKpi).all()}
 
-    # 6. HISTORIAL DE MEDICIONES (6 MESES: Mayo a Octubre 2026) para los KPIs 1 al 13
+    # 6. HISTORIAL DE MEDICIONES (7 MESES: Mayo a Noviembre 2026) para los KPIs 1 al 13
     # Simula evolución real con tendencia al alza o alertas
     historico_valores = {
-        "FIN-01": [21500.0, 22200.0, 23100.0, 23800.0, 24100.0, 24500.0],
-        "FIN-02": [43.5, 44.0, 45.2, 46.0, 47.1, 48.5],
-        "FIN-03": [94.0, 95.0, 97.0, 95.5, 96.0, 96.0],
-        "FIN-04": [88.0, 86.5, 84.0, 82.0, 80.0, 78.0], # Tendencia a la baja (Crítico)
-        "CLI-01": [12800.0, 13400.0, 14100.0, 14700.0, 15200.0, 15800.0],
-        "CLI-02": [31.0, 32.5, 33.0, 34.0, 34.5, 35.0],
-        "CLI-03": [7.0, 8.0, 8.0, 9.0, 10.0, 11.0],
-        "PRO-01": [89.0, 90.5, 91.0, 91.5, 91.0, 92.0],
-        "PRO-02": [4.8, 5.0, 5.3, 5.7, 6.0, 6.2], # Merma subiendo (Crítico)
-        "PRO-03": [97.0, 97.5, 98.0, 98.5, 99.0, 99.0],
-        "PRO-04": [82.0, 83.0, 84.0, 84.5, 86.0, 85.0],
-        "PRO-05": [7.4, 7.35, 7.3, 7.28, 7.22, 7.20], # Dentro del rango óptimo
-        "APR-01": [82.0, 84.0, 86.0, 88.0, 88.0, 90.0]
+        "FIN-01": [21500.0, 22200.0, 23100.0, 23800.0, 24100.0, 24500.0, 25200.0],
+        "FIN-02": [43.5, 44.0, 45.2, 46.0, 47.1, 48.5, 49.0],
+        "FIN-03": [94.0, 95.0, 97.0, 95.5, 96.0, 96.0, 97.5],
+        "FIN-04": [88.0, 86.5, 84.0, 82.0, 80.0, 78.0, 79.2], # Tendencia a la baja (Crítico)
+        "CLI-01": [12800.0, 13400.0, 14100.0, 14700.0, 15200.0, 15800.0, 16200.0],
+        "CLI-02": [31.0, 32.5, 33.0, 34.0, 34.5, 35.0, 36.5],
+        "CLI-03": [7.0, 8.0, 8.0, 9.0, 10.0, 11.0, 12.0],
+        "PRO-01": [89.0, 90.5, 91.0, 91.5, 91.0, 92.0, 93.8],
+        "PRO-02": [4.8, 5.0, 5.3, 5.7, 6.0, 6.2, 6.0], # Merma subiendo (Crítico)
+        "PRO-03": [97.0, 97.5, 98.0, 98.5, 99.0, 99.0, 99.2],
+        "PRO-04": [82.0, 83.0, 84.0, 84.5, 86.0, 85.0, 88.0],
+        "PRO-05": [7.4, 7.35, 7.3, 7.28, 7.22, 7.20, 7.25], # Dentro del rango óptimo
+        "APR-01": [82.0, 84.0, 86.0, 88.0, 88.0, 90.0, 92.0]
         # "APR-02" no tiene mediciones registradas a propósito
     }
 
-    periodos_codigos = ["2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10"]
-    fechas_medicion = ["2026-05-28", "2026-06-28", "2026-07-28", "2026-08-28", "2026-09-28", "2026-10-25"]
+    periodos_codigos = ["2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10", "2026-11"]
+    fechas_medicion = ["2026-05-28", "2026-06-28", "2026-07-28", "2026-08-28", "2026-09-28", "2026-10-25", "2026-11-23"]
 
     for k_cod, valores in historico_valores.items():
         kpi_inst = kpis_db.get(k_cod)
@@ -658,7 +659,7 @@ def precargar_datos_si_vacio(db: Session):
                 valor_obtenido=val,
                 observaciones=f"Cierre de medición mensual per {periodos_codigos[i]}",
                 responsable=kpi_inst.responsable,
-                origen="MANUAL" if i < 5 else "ODOO_17_SYNC"
+                origen="MANUAL" if i < 6 else "ODOO_17_SYNC"
             )
             db.add(med)
 
@@ -783,7 +784,7 @@ def precargar_datos_si_vacio(db: Session):
     db.commit()
 
     # 8. Sincronizar y recalcular todo el BSC para dejar los semáforos y cálculos listos
-    recalcular_todo_el_bsc(db, "2026-10")
+    recalcular_todo_el_bsc(db, "2026-11")
 
     # Registro de log inicial
     db.add(SyncLog(

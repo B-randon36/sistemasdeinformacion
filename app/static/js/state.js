@@ -10,7 +10,7 @@ try {
 const state = {
   currentUser: _savedUser,
   token: localStorage.getItem('agro_bsc_token') || null,
-  activePeriod: '2026-10',
+  activePeriod: '2026-11',
   periods: [],
   modulosOdoo: [],
   currentView: 'dashboard',

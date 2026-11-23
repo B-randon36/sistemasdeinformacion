@@ -63,10 +63,10 @@ const app = {
     const selects = document.querySelectorAll('.module-select-sync');
     selects.forEach(sel => {
       const includeAll = sel.getAttribute('data-include-all') === 'true';
-      let options = includeAll ? '<option value="TODOS">Todos los Módulos Odoo 17</option>' : '<option value="">Seleccione Módulo Odoo...</option>';
+      let options = includeAll ? '<option value="TODOS">Todas las Áreas de Odoo 17</option>' : '<option value="">Seleccione Área de la Empresa...</option>';
       options += state.modulosOdoo.map(m => `
-        <option value="${m.id}" data-codigo="${m.codigo}" data-nombre="${m.nombre_modulo_odoo}">
-          ${m.nombre_modulo_odoo} [${m.modelo_tecnico}]
+        <option value="${m.id}" data-codigo="${m.codigo}" data-nombre="${m.nombre_modulo_odoo}" data-modelo="${m.modelo_tecnico}">
+          ${m.nombre_modulo_odoo}
         </option>
       `).join('');
       sel.innerHTML = options;
@@ -450,15 +450,34 @@ const app = {
     }
   },
 
-  abrirModalNuevoObjetivo() {
+  async abrirModalNuevoObjetivo() {
     document.getElementById('form-objetivo-id').value = '';
-    document.getElementById('form-objetivo-codigo').value = '';
     document.getElementById('form-objetivo-nombre').value = '';
     document.getElementById('form-objetivo-descripcion').value = '';
-    document.getElementById('form-objetivo-responsable').value = '';
+    document.getElementById('form-objetivo-responsable').value = state.currentUser ? state.currentUser.nombre : '';
     document.getElementById('form-objetivo-ponderacion').value = '25';
     document.getElementById('modal-objetivo-title').textContent = 'Nuevo Objetivo Estratégico';
+    await this.sugerirCodigoObjetivo();
     document.getElementById('modal-form-objetivo').classList.remove('hidden');
+  },
+
+  async sugerirCodigoObjetivo() {
+    const idField = document.getElementById('form-objetivo-id');
+    if (idField && idField.value) return; // No sobrescribir al editar
+    const persp = document.getElementById('form-objetivo-perspectiva').value;
+    const prefMap = { FINANCIERA: 'OBJ-FIN', CLIENTE: 'OBJ-CLI', PROCESOS_INTERNOS: 'OBJ-PRO', APRENDIZAJE: 'OBJ-APR' };
+    const pref = prefMap[persp] || 'OBJ-GEN';
+    try {
+      const objs = await api.getObjetivos();
+      const nums = objs
+        .filter(o => o.codigo && o.codigo.startsWith(pref))
+        .map(o => parseInt(o.codigo.split('-').pop(), 10))
+        .filter(n => !isNaN(n));
+      const next = (nums.length ? Math.max(...nums) : 0) + 1;
+      document.getElementById('form-objetivo-codigo').value = `${pref}-${String(next).padStart(2, '0')}`;
+    } catch (e) {
+      document.getElementById('form-objetivo-codigo').value = `${pref}-05`;
+    }
   },
 
   async editarObjetivo(id) {
@@ -600,18 +619,82 @@ const app = {
     }
   },
 
+  alCambiarAreaAmigableKpi() {
+    const sel = document.getElementById('form-kpi-area-amigable');
+    if (!sel || !sel.value) return;
+    const [mod, modelo] = sel.value.split('|');
+    document.getElementById('form-kpi-modulo').value = mod;
+    document.getElementById('form-kpi-modelo').value = modelo;
+    const hint = document.getElementById('form-kpi-sync-hint');
+    if (hint) {
+      const textoLimpio = sel.options[sel.selectedIndex].text.replace(/^[^\wÁÉÍÓÚáéíóú]+/, '');
+      hint.innerHTML = `<i class="fas fa-magic mr-1"></i> Vinculado automáticamente a Odoo: <strong>${textoLimpio}</strong>`;
+    }
+  },
+
+  async alCambiarObjetivoKpi() {
+    const selObj = document.getElementById('form-kpi-objetivo');
+    if (!selObj || !selObj.options.length) return;
+    const opt = selObj.options[selObj.selectedIndex];
+    const persp = opt ? (opt.getAttribute('data-perspectiva') || 'FINANCIERA') : 'FINANCIERA';
+    const modNombre = opt ? (opt.getAttribute('data-modulo') || '') : '';
+    const modModelo = opt ? (opt.getAttribute('data-modelo') || '') : '';
+    const respObj = opt ? (opt.getAttribute('data-responsable') || '') : '';
+
+    // Seleccionar automáticamente el área de Odoo correspondiente al objetivo
+    const selArea = document.getElementById('form-kpi-area-amigable');
+    if (selArea && modModelo) {
+      for (let i = 0; i < selArea.options.length; i++) {
+        if (selArea.options[i].value.endsWith(`|${modModelo}`) || (modNombre && selArea.options[i].value.startsWith(modNombre))) {
+          selArea.selectedIndex = i;
+          break;
+        }
+      }
+      this.alCambiarAreaAmigableKpi();
+    }
+
+    // Si es un nuevo KPI, sugerir código y responsable automáticamente
+    const idField = document.getElementById('form-kpi-id');
+    if (!idField || !idField.value) {
+      const prefMap = { FINANCIERA: 'FIN', CLIENTE: 'CLI', PROCESOS_INTERNOS: 'PRO', APRENDIZAJE: 'APR' };
+      const pref = prefMap[persp] || 'KPI';
+      try {
+        const kpis = await api.getKpis();
+        const nums = kpis
+          .filter(k => k.codigo && k.codigo.startsWith(pref + '-'))
+          .map(k => parseInt(k.codigo.split('-').pop(), 10))
+          .filter(n => !isNaN(n));
+        const next = (nums.length ? Math.max(...nums) : 0) + 1;
+        document.getElementById('form-kpi-codigo').value = `${pref}-${String(next).padStart(2, '0')}`;
+      } catch (e) {
+        document.getElementById('form-kpi-codigo').value = `${pref}-05`;
+      }
+      const respInput = document.getElementById('form-kpi-responsable');
+      if (respInput && !respInput.value && respObj) {
+        respInput.value = respObj;
+      }
+    }
+  },
+
   async abrirModalNuevoKpi() {
     const objetivos = await api.getObjetivos();
     const selObj = document.getElementById('form-kpi-objetivo');
-    selObj.innerHTML = objetivos.map(o => `<option value="${o.id}">[${o.codigo}] ${o.nombre}</option>`).join('');
+    selObj.innerHTML = objetivos.map(o => `
+      <option value="${o.id}" data-perspectiva="${o.perspectiva}" data-modulo="${o.modulo_nombre || ''}" data-modelo="${o.modulo_modelo || ''}" data-responsable="${o.responsable || ''}">
+        [${o.codigo}] ${o.nombre}
+      </option>
+    `).join('');
 
     document.getElementById('form-kpi-id').value = '';
-    document.getElementById('form-kpi-codigo').value = '';
     document.getElementById('form-kpi-nombre').value = '';
     document.getElementById('form-kpi-formula').value = '';
     document.getElementById('form-kpi-meta').value = '100';
     document.getElementById('form-kpi-umbral-verde').value = '90';
     document.getElementById('form-kpi-umbral-amarillo').value = '75';
+    document.getElementById('form-kpi-responsable').value = '';
+    const titleEl = document.getElementById('modal-kpi-title');
+    if (titleEl) titleEl.textContent = 'Nuevo Indicador de Desempeño (KPI)';
+    await this.alCambiarObjetivoKpi();
     document.getElementById('modal-form-kpi').classList.remove('hidden');
   },
 
@@ -619,7 +702,11 @@ const app = {
     const kpi = await api.getKpi(id);
     const objetivos = await api.getObjetivos();
     const selObj = document.getElementById('form-kpi-objetivo');
-    selObj.innerHTML = objetivos.map(o => `<option value="${o.id}" ${o.id === kpi.objetivo_id ? 'selected' : ''}>[${o.codigo}] ${o.nombre}</option>`).join('');
+    selObj.innerHTML = objetivos.map(o => `
+      <option value="${o.id}" data-perspectiva="${o.perspectiva}" data-modulo="${o.modulo_nombre || ''}" data-modelo="${o.modulo_modelo || ''}" data-responsable="${o.responsable || ''}" ${o.id === kpi.objetivo_id ? 'selected' : ''}>
+        [${o.codigo}] ${o.nombre}
+      </option>
+    `).join('');
 
     document.getElementById('form-kpi-id').value = kpi.id;
     document.getElementById('form-kpi-codigo').value = kpi.codigo;
@@ -634,6 +721,21 @@ const app = {
     document.getElementById('form-kpi-umbral-amarillo').value = kpi.umbral_amarillo;
     document.getElementById('form-kpi-responsable').value = kpi.responsable || '';
 
+    const selArea = document.getElementById('form-kpi-area-amigable');
+    if (selArea) {
+      let matched = false;
+      for (let i = 0; i < selArea.options.length; i++) {
+        if (selArea.options[i].value.endsWith(`|${kpi.modelo_odoo}`) || selArea.options[i].value.startsWith(kpi.modulo_odoo)) {
+          selArea.selectedIndex = i;
+          matched = true;
+          break;
+        }
+      }
+      if (matched) this.alCambiarAreaAmigableKpi();
+    }
+
+    const titleEl = document.getElementById('modal-kpi-title');
+    if (titleEl) titleEl.textContent = `Editar Indicador [${kpi.codigo}]`;
     document.getElementById('modal-form-kpi').classList.remove('hidden');
   },
 
@@ -688,10 +790,13 @@ const app = {
   async renderMediciones() {
     try {
       const kpis = await api.getKpis();
+      const kpiMap = {};
+      kpis.forEach(k => { kpiMap[k.id] = k; });
+
       const selKpi = document.getElementById('form-med-kpi');
       if (selKpi) {
-        selKpi.innerHTML = '<option value="">Seleccione KPI a medir...</option>' + kpis.map(k => `
-          <option value="${k.id}" data-unidad="${k.unidad}" data-sentido="${k.sentido}" data-meta="${k.meta}">
+        selKpi.innerHTML = '<option value="">Seleccione el indicador a evaluar...</option>' + kpis.map(k => `
+          <option value="${k.id}" data-unidad="${k.unidad}" data-sentido="${k.sentido}" data-meta="${k.meta}" data-nombre="${k.nombre}">
             [${k.codigo}] ${k.nombre} (Meta: ${k.meta} ${k.unidad})
           </option>
         `).join('');
@@ -704,17 +809,22 @@ const app = {
       const tbody = document.getElementById('mediciones-table-body');
       if (!tbody) return;
 
-      tbody.innerHTML = mediciones.map(m => `
+      tbody.innerHTML = mediciones.map(m => {
+        const kInfo = kpiMap[m.kpi_id];
+        const kLabel = kInfo ? `<span class="font-mono text-blue-600 font-bold mr-1">[${kInfo.codigo}]</span> ${kInfo.nombre}` : `KPI #${m.kpi_id}`;
+        const kUnidad = kInfo ? kInfo.unidad : '';
+        const origenAmigable = m.origen === 'ODOO_17_SYNC' ? 'Automático (Odoo 17)' : 'Registro Manual';
+        return `
         <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors text-xs">
           <td class="py-3 px-4 font-bold text-slate-800">${m.periodo}</td>
           <td class="py-3 px-4 text-slate-500">${m.fecha}</td>
-          <td class="py-3 px-4 font-semibold text-slate-700">KPI #${m.kpi_id}</td>
-          <td class="py-3 px-4 font-extrabold text-slate-900 text-right">${m.valor_obtenido}</td>
+          <td class="py-3 px-4 font-semibold text-slate-700">${kLabel}</td>
+          <td class="py-3 px-4 font-extrabold text-slate-900 text-right">${m.valor_obtenido} ${kUnidad}</td>
           <td class="py-3 px-4">
             <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
               m.origen === 'ODOO_17_SYNC' ? 'bg-purple-100 text-purple-700' : 'bg-slate-100 text-slate-700'
             }">
-              <i class="fas ${m.origen === 'ODOO_17_SYNC' ? 'fa-sync-alt' : 'fa-pen'} mr-1"></i> ${m.origen}
+              <i class="fas ${m.origen === 'ODOO_17_SYNC' ? 'fa-sync-alt' : 'fa-pen'} mr-1"></i> ${origenAmigable}
             </span>
           </td>
           <td class="py-3 px-4 text-slate-500 max-w-xs truncate">${m.observaciones || ''}</td>
@@ -723,15 +833,38 @@ const app = {
             <button onclick="app.eliminarMedicion(${m.id})" class="text-slate-400 hover:text-rose-600 p-1"><i class="fas fa-trash"></i></button>
           </td>
         </tr>
-      `).join('');
+      `}).join('');
     } catch (err) {
       console.error(err);
     }
   },
 
-  abrirModalMedicionRapida(kpiId, kpiCodigo, kpiNombre, kpiUnidad) {
+  actualizarAyudaMedicion() {
     const selKpi = document.getElementById('form-med-kpi');
-    if (selKpi) selKpi.value = kpiId;
+    const hint = document.getElementById('form-med-meta-hint');
+    const lbl = document.getElementById('form-med-valor-label');
+    if (!selKpi || !hint) return;
+    const opt = selKpi.options[selKpi.selectedIndex];
+    if (!opt || !opt.value) {
+      hint.classList.add('hidden');
+      return;
+    }
+    const unidad = opt.getAttribute('data-unidad') || '';
+    const meta = opt.getAttribute('data-meta') || '';
+    const sentido = opt.getAttribute('data-sentido') || 'MAYOR_MEJOR';
+    const sentidoTxt = sentido === 'MENOR_MEJOR' ? 'Mientras más bajo, mejor' : sentido === 'RANGO' ? 'Mantener en rango óptimo' : 'Mientras más alto, mejor';
+    hint.innerHTML = `<i class="fas fa-bullseye mr-1"></i> <strong>Meta esperada:</strong> ${meta} ${unidad} &bull; <em>${sentidoTxt}</em>`;
+    hint.classList.remove('hidden');
+    if (lbl) lbl.textContent = `3. Resultado o Valor Alcanzado (en ${unidad}):`;
+  },
+
+  async abrirModalMedicionRapida(kpiId, kpiCodigo, kpiNombre, kpiUnidad) {
+    const selKpi = document.getElementById('form-med-kpi');
+    if (selKpi && selKpi.options.length <= 1) {
+      await this.renderMediciones();
+    }
+    if (selKpi && kpiId) selKpi.value = kpiId;
+    this.actualizarAyudaMedicion();
     document.getElementById('form-med-fecha').value = new Date().toISOString().split('T')[0];
     document.getElementById('form-med-responsable').value = state.currentUser ? state.currentUser.nombre : '';
     document.getElementById('modal-registro-medicion').classList.remove('hidden');
@@ -909,16 +1042,23 @@ const app = {
   },
 
   async abrirModalNuevaIniciativa() {
-    const objetivos = await api.getObjetivos();
+    const [objetivos, iniciativas] = await Promise.all([api.getObjetivos(), api.getIniciativas()]);
     const selObj = document.getElementById('form-inic-objetivo');
     selObj.innerHTML = objetivos.map(o => `<option value="${o.id}">[${o.codigo}] ${o.nombre}</option>`).join('');
 
+    const nums = iniciativas
+      .filter(i => i.codigo && i.codigo.startsWith('INI-'))
+      .map(i => parseInt(i.codigo.split('-').pop(), 10))
+      .filter(n => !isNaN(n));
+    const next = (nums.length ? Math.max(...nums) : 8) + 1;
+
     document.getElementById('form-inic-id').value = '';
-    document.getElementById('form-inic-codigo').value = '';
+    document.getElementById('form-inic-codigo').value = `INI-${String(next).padStart(2, '0')}`;
     document.getElementById('form-inic-nombre').value = '';
     document.getElementById('form-inic-descripcion').value = '';
     document.getElementById('form-inic-presupuesto').value = '20000';
     document.getElementById('form-inic-avance').value = '0';
+    document.getElementById('form-inic-responsable').value = state.currentUser ? state.currentUser.nombre : '';
     document.getElementById('modal-form-iniciativa').classList.remove('hidden');
   },
 

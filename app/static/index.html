@@ -42,6 +42,9 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
+  <!-- Favicon Oficial Agro Peruvian Foods -->
+  <link rel="icon" type="image/png" href="/static/img/logo_agroperuvian.png">
+
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/static/css/app.css">
 </head>
@@ -52,14 +55,12 @@
   <!-- ======================================================== -->
   <aside id="sidebar" class="w-72 bg-brand-navy text-slate-300 flex-shrink-0 flex flex-col justify-between border-r border-slate-800 z-30 select-none">
     <div>
-      <!-- Brand Header -->
-      <div class="p-6 border-b border-slate-800/80 flex items-center space-x-3.5" style="background: linear-gradient(135deg, rgba(61,35,20,0.45), rgba(45,90,39,0.25));">
-        <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-white shadow-lg" style="background: linear-gradient(135deg, #3D2314, #2D5A27);">
-          <i class="fas fa-seedling text-xl"></i>
-        </div>
+      <!-- Brand Header con Logo Oficial -->
+      <div class="p-5 border-b border-slate-800/80 flex items-center space-x-3.5" style="background: linear-gradient(135deg, rgba(61,35,20,0.55), rgba(45,90,39,0.35));">
+        <img src="/static/img/logo_agroperuvian.png" alt="Logo Agro Peruvian Foods" class="w-12 h-12 rounded-full object-cover bg-white p-0.5 shadow-lg border-2 border-emerald-400/70 flex-shrink-0">
         <div>
           <h1 class="font-heading font-extrabold text-white text-base leading-tight tracking-wide">AGRO PERUVIAN</h1>
-          <p class="text-[11px] font-semibold text-emerald-400 tracking-wider uppercase">Foods S.A.C. &bull; RUC 20608976541</p>
+          <p class="text-[11px] font-semibold text-emerald-400 tracking-wider uppercase">Foods S.A.C. &bull; RUC 20609060876</p>
         </div>
       </div>
 
@@ -165,7 +166,7 @@
           <i class="fas fa-calendar-alt text-blue-600"></i>
           <span>Período de Evaluación:</span>
           <select id="global-period-select" class="period-select-sync bg-transparent font-bold text-slate-900 focus:outline-none cursor-pointer">
-            <option value="2026-10">Octubre 2026 (Oficial)</option>
+            <option value="2026-11">Noviembre 2026 (Oficial)</option>
           </select>
         </div>
 
@@ -197,10 +198,13 @@
     </header>
 
     <!-- Printable Header (Visible only when printing) -->
-    <div class="print-only p-6 border-b border-slate-300">
-      <h1 class="text-2xl font-bold text-slate-900">AGRO PERUVIAN FOODS S.A.C. (RUC: 20608976541)</h1>
-      <h2 class="text-base text-slate-600 font-medium">Reporte Oficial de Balanced Scorecard &mdash; "Transformando la riqueza del cacao y coco peruano"</h2>
-      <p class="text-xs text-slate-500 mt-1">Carretera Marginal km 4.5, Satipo, Junín, Perú &bull; Integración ERP Odoo 17 (agroperuvian_db)</p>
+    <div class="print-only p-6 border-b border-slate-300 flex items-center space-x-4">
+      <img src="/static/img/logo_agroperuvian.png" alt="Logo Agro Peruvian Foods" class="w-14 h-14 rounded-full object-cover border border-slate-300">
+      <div>
+        <h1 class="text-2xl font-bold text-slate-900">AGRO PERUVIAN FOODS S.A.C. (RUC: 20609060876)</h1>
+        <h2 class="text-base text-slate-600 font-medium">Reporte Oficial de Balanced Scorecard &mdash; "Transformando la riqueza del cacao y coco peruano"</h2>
+        <p class="text-xs text-slate-500 mt-1">Puente Piedra, Lima / Planta Satipo, Junín, Perú &bull; Integración ERP Odoo 17</p>
+      </div>
     </div>
 
     <!-- Contenedor Dinámico de Vistas -->
@@ -212,15 +216,18 @@
       <section id="view-dashboard" class="view-section space-y-6">
         <!-- Banner de Bienvenida y Filtros -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-brand-slate text-white p-6 rounded-3xl shadow-xl shadow-slate-900/10">
-          <div>
-            <div class="flex items-center space-x-2 text-xs font-semibold text-emerald-400 mb-1">
-              <i class="fas fa-check-circle"></i>
-              <span>SISTEMA DE GESTIÓN ESTRATÉGICA Y CONTROL OPERATIVO</span>
+          <div class="flex items-center space-x-4">
+            <img src="/static/img/logo_agroperuvian.png" alt="Agro Peruvian Foods" class="hidden sm:block w-16 h-16 rounded-full object-cover bg-white p-1 shadow-lg border-2 border-emerald-400/80 flex-shrink-0">
+            <div>
+              <div class="flex items-center space-x-2 text-xs font-semibold text-emerald-400 mb-1">
+                <i class="fas fa-check-circle"></i>
+                <span>SISTEMA DE GESTIÓN ESTRATÉGICA Y CONTROL OPERATIVO &bull; RUC 20609060876</span>
+              </div>
+              <h2 class="font-heading font-extrabold text-2xl tracking-tight text-white">Tablero de Control Balanced Scorecard</h2>
+              <p class="text-xs text-slate-300 mt-1 max-w-2xl">
+                Monitoreo continuo de los 16 Objetivos Estratégicos y 14 KPIs de <strong>AGRO PERUVIAN FOODS S.A.C.</strong> sincronizados en tiempo real desde <strong>Odoo 17</strong>.
+              </p>
             </div>
-            <h2 class="font-heading font-extrabold text-2xl tracking-tight text-white">Tablero de Control Balanced Scorecard</h2>
-            <p class="text-xs text-slate-300 mt-1 max-w-2xl">
-              Monitoreo continuo de los 16 Objetivos Estratégicos y 14 KPIs de las plantas de Satipo y Pichanaqui sincronizados en tiempo real desde <strong>Odoo 17</strong>.
-            </p>
           </div>
 
           <!-- Medidor de Cumplimiento Global Ponderado -->
@@ -321,9 +328,9 @@
             <div class="flex items-center justify-between mb-4">
               <div>
                 <h3 class="font-bold text-slate-800 text-base">Tendencia Histórica de Cumplimiento BSC</h3>
-                <span class="text-xs text-slate-500">Evolución mensual (Mayo a Octubre 2026)</span>
+                <span class="text-xs text-slate-500">Evolución mensual (Mayo a Noviembre 2026)</span>
               </div>
-              <span class="text-xs bg-blue-50 text-blue-600 font-semibold px-2.5 py-1 rounded-full">Histórico 6M</span>
+              <span class="text-xs bg-blue-50 text-blue-600 font-semibold px-2.5 py-1 rounded-full">Histórico 7M</span>
             </div>
             <div class="h-64 relative">
               <canvas id="chart-line-tendencia"></canvas>
@@ -620,7 +627,7 @@
           <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
             <div>
               <h3 class="font-bold text-slate-800 text-base">Consolidado Oficial de Cumplimiento Estratégico</h3>
-              <span class="text-xs text-slate-500">Período: <strong id="rep-periodo-badge">2026-10</strong> | Empresa: <strong>AGRO PERUVIAN FOODS S.A.C.</strong></span>
+              <span class="text-xs text-slate-500">Período: <strong id="rep-periodo-badge">2026-11</strong> | Empresa: <strong>AGRO PERUVIAN FOODS S.A.C.</strong></span>
             </div>
             <div class="text-right">
               <span class="text-xs text-slate-400 block">Cumplimiento Global:</span>
@@ -796,11 +803,29 @@
     </div>
   </div>
 
-  <!-- Modal 2: Formulario Objetivo -->
+  <!-- Lista global de responsables sugeridos para autocompletar fácilmente -->
+  <datalist id="lista-responsables-agro">
+    <option value="Lic. Carlos Mendoza (Finanzas y Facturación)"></option>
+    <option value="Lic. Sofía Alvarado (Ventas B2B y E-Commerce)"></option>
+    <option value="Ing. Roberto Santillán (Jefe de Planta y Manufactura)"></option>
+    <option value="Ing. Marco Paredes (Control de Calidad y Almacén)"></option>
+    <option value="Lic. Elena Quispe (Compras y Proveedores)"></option>
+    <option value="Lic. Patricia Salazar (Recursos Humanos y Planta)"></option>
+    <option value="Dra. Gabriela Vega Solari (Gerencia General)"></option>
+    <option value="Ing. Jean Paul Ramos (Dirección de Estrategia y TI)"></option>
+  </datalist>
+
+  <!-- Modal 2: Formulario Objetivo (Amigable) -->
   <div id="modal-form-objetivo" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-200">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-200 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-        <h3 id="modal-objetivo-title" class="font-heading font-bold text-lg text-slate-900">Nuevo Objetivo Estratégico</h3>
+        <div class="flex items-center space-x-3">
+          <img src="/static/img/logo_agroperuvian.png" alt="Agro Peruvian Foods" class="w-10 h-10 rounded-full object-cover border border-emerald-500/40 shadow-sm">
+          <div>
+            <h3 id="modal-objetivo-title" class="font-heading font-bold text-lg text-slate-900 leading-tight">Nuevo Objetivo Estratégico</h3>
+            <p class="text-[11px] text-slate-500">Define qué meta general desea lograr la empresa</p>
+          </div>
+        </div>
         <button onclick="document.getElementById('modal-form-objetivo').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
       </div>
 
@@ -808,52 +833,52 @@
         <input type="hidden" id="form-objetivo-id">
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Código Único (ej. OBJ-FIN-05):</label>
-            <input type="text" id="form-objetivo-codigo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-          </div>
-          <div>
-            <label class="font-semibold text-slate-700 block mb-1">Perspectiva BSC:</label>
-            <select id="form-objetivo-perspectiva" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-              <option value="FINANCIERA">Perspectiva Financiera</option>
-              <option value="CLIENTE">Perspectiva del Cliente</option>
-              <option value="PROCESOS_INTERNOS">Perspectiva de Procesos Internos</option>
-              <option value="APRENDIZAJE">Perspectiva de Aprendizaje</option>
+            <label class="font-semibold text-slate-700 block mb-1">1. Área o Perspectiva:</label>
+            <select id="form-objetivo-perspectiva" onchange="app.sugerirCodigoObjetivo()" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="FINANCIERA">💰 Financiera (Ingresos y Costos)</option>
+              <option value="CLIENTE">🤝 Clientes y Ventas</option>
+              <option value="PROCESOS_INTERNOS">⚙️ Planta, Producción y Calidad</option>
+              <option value="APRENDIZAJE">🎓 Personal y Capacitación</option>
             </select>
           </div>
+          <div>
+            <label class="font-semibold text-slate-700 block mb-1">Código (Automático):</label>
+            <input type="text" id="form-objetivo-codigo" required placeholder="Se genera solo, ej. OBJ-FIN-05" class="w-full px-3 py-2 border rounded-xl bg-slate-50 font-semibold text-slate-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
         </div>
 
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Nombre del Objetivo:</label>
-          <input type="text" id="form-objetivo-nombre" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <label class="font-semibold text-slate-700 block mb-1">2. ¿Qué objetivo queremos lograr?</label>
+          <input type="text" id="form-objetivo-nombre" required placeholder="Ej. Aumentar las ventas de aceite de coco en tiendas saludables" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
         </div>
 
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Descripción Estratégica:</label>
-          <textarea id="form-objetivo-descripcion" rows="2" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+          <label class="font-semibold text-slate-700 block mb-1">3. Breve explicación (Opcional):</label>
+          <textarea id="form-objetivo-descripcion" rows="2" placeholder="Describe en palabras simples cómo ayudará este objetivo a Agro Peruvian Foods..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Módulo Odoo 17:</label>
+            <label class="font-semibold text-slate-700 block mb-1">4. Área vinculada en Odoo:</label>
             <select id="form-objetivo-modulo" class="module-select-sync w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
           </div>
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Ponderación (%) en Perspectiva:</label>
+            <label class="font-semibold text-slate-700 block mb-1">Importancia / Peso (%):</label>
             <input type="number" id="form-objetivo-ponderacion" step="0.1" min="1" max="100" value="25" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Responsable:</label>
-            <input type="text" id="form-objetivo-responsable" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <label class="font-semibold text-slate-700 block mb-1">5. Persona Responsable:</label>
+            <input type="text" id="form-objetivo-responsable" list="lista-responsables-agro" placeholder="Elige o escribe un nombre..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
           </div>
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Prioridad:</label>
+            <label class="font-semibold text-slate-700 block mb-1">Nivel de Prioridad:</label>
             <select id="form-objetivo-prioridad" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-              <option value="Alta">Alta</option>
-              <option value="Media" selected>Media</option>
-              <option value="Baja">Baja</option>
+              <option value="Alta">🔴 Alta (Urgente)</option>
+              <option value="Media" selected>🟡 Media (Normal)</option>
+              <option value="Baja">🟢 Baja</option>
             </select>
           </div>
         </div>
@@ -866,91 +891,123 @@
     </div>
   </div>
 
-  <!-- Modal 3: Formulario KPI -->
+  <!-- Modal 3: Formulario KPI (Rediseñado Amigable y No Técnico con Logo Oficial) -->
   <div id="modal-form-kpi" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-xl w-full p-6 animate-in fade-in zoom-in-95 duration-200">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-xl w-full p-6 animate-in fade-in zoom-in-95 duration-200 max-h-[94vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-        <h3 class="font-heading font-bold text-lg text-slate-900">Configuración de Indicador KPI</h3>
+        <div class="flex items-center space-x-3">
+          <img src="/static/img/logo_agroperuvian.png" alt="Agro Peruvian Foods" class="w-11 h-11 rounded-full object-cover border-2 border-emerald-500/50 shadow-sm flex-shrink-0">
+          <div>
+            <h3 id="modal-kpi-title" class="font-heading font-bold text-lg text-slate-900 leading-tight">Configurar Indicador de Desempeño (KPI)</h3>
+            <p class="text-[11px] text-slate-500">Completa los datos en lenguaje simple; la conexión técnica con Odoo se configura sola</p>
+          </div>
+        </div>
         <button onclick="document.getElementById('modal-form-kpi').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
       </div>
 
-      <form onsubmit="app.guardarKpi(event)" class="space-y-3 text-xs">
+      <form onsubmit="app.guardarKpi(event)" class="space-y-3.5 text-xs">
         <input type="hidden" id="form-kpi-id">
-        <div class="grid grid-cols-3 gap-3">
-          <div>
-            <label class="font-semibold text-slate-700 block mb-1">Código (ej. FIN-05):</label>
-            <input type="text" id="form-kpi-codigo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-          </div>
+
+        <!-- Paso 1: Objetivo y Código Automático -->
+        <div class="grid grid-cols-3 gap-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-200/80">
           <div class="col-span-2">
-            <label class="font-semibold text-slate-700 block mb-1">Objetivo Estratégico Vinculado:</label>
-            <select id="form-kpi-objetivo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+            <label class="font-bold text-slate-700 block mb-1">1. ¿A qué Objetivo ayuda este indicador?</label>
+            <select id="form-kpi-objetivo" onchange="app.alCambiarObjetivoKpi()" required class="w-full px-3 py-2 border bg-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Código (Automático):</label>
+            <input type="text" id="form-kpi-codigo" required placeholder="Ej. FIN-05" class="w-full px-3 py-2 border rounded-xl bg-white font-bold text-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
           </div>
         </div>
 
+        <!-- Paso 2: Nombre y Explicación sencilla -->
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Nombre del Indicador:</label>
-          <input type="text" id="form-kpi-nombre" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <label class="font-bold text-slate-700 block mb-1">2. Nombre del Indicador (¿Qué vamos a medir?):</label>
+          <input type="text" id="form-kpi-nombre" required placeholder="Ej. Ventas mensuales de Aceite de Coco y Cacao" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
         </div>
 
-        <div>
-          <label class="font-semibold text-slate-700 block mb-1">Fórmula de Cálculo:</label>
-          <input type="text" id="form-kpi-formula" placeholder="ej. (Ventas / Meta) * 100" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Módulo Odoo 17:</label>
-            <input type="text" id="form-kpi-modulo" placeholder="ej. Facturación (account)" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <label class="font-bold text-slate-700 block mb-1">3. Área de la Empresa (Odoo):</label>
+            <select id="form-kpi-area-amigable" onchange="app.alCambiarAreaAmigableKpi()" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="Facturación (account)|account.move">🧾 Facturación y Finanzas</option>
+              <option value="Punto de Venta (point_of_sale)|pos.session">🏪 Punto de Venta (Tienda / Caja)</option>
+              <option value="Ventas (sale_management)|sale.order">🛍️ Ventas y Pedidos de Clientes</option>
+              <option value="CRM (crm)|crm.lead">🤝 CRM y Captación de Clientes</option>
+              <option value="Manufactura BOM (mrp)|mrp.production">🏭 Planta y Producción (Recetas BOM)</option>
+              <option value="Inventario (stock)|stock.lot">📦 Almacén, Stock y Lotes</option>
+              <option value="Compras (purchase)|purchase.order">🚚 Compras y Proveedores</option>
+              <option value="Empleados (hr)|hr.employee">👷 Recursos Humanos y Personal</option>
+            </select>
+            <!-- Campos técnicos ocultos que se rellenan automáticamente -->
+            <input type="hidden" id="form-kpi-modulo" value="Facturación (account)">
+            <input type="hidden" id="form-kpi-modelo" value="account.move">
+            <span id="form-kpi-sync-hint" class="text-[10px] text-emerald-700 font-medium mt-1 block">
+              <i class="fas fa-magic mr-1"></i> Vinculado automáticamente a Odoo: <strong>Facturación</strong>
+            </span>
           </div>
+
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Modelo Técnico Odoo 17:</label>
-            <input type="text" id="form-kpi-modelo" placeholder="ej. account.move" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono">
+            <label class="font-bold text-slate-700 block mb-1">¿Cómo se calcula? (En palabras simples):</label>
+            <input type="text" id="form-kpi-formula" placeholder="Ej. Suma de ventas del mes comparada con la meta" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <span class="text-[10px] text-slate-400 mt-1 block">Opcional: sirve de guía para quien revise el indicador.</span>
           </div>
         </div>
 
-        <div class="grid grid-cols-3 gap-3">
+        <!-- Paso 3: Meta y Unidad -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-blue-50/40 p-3 rounded-2xl border border-blue-100">
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Sentido de Meta:</label>
-            <select id="form-kpi-sentido" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-              <option value="MAYOR_MEJOR">Mayor es Mejor</option>
-              <option value="MENOR_MEJOR">Menor es Mejor</option>
-              <option value="RANGO">Rango Específico</option>
+            <label class="font-bold text-slate-700 block mb-1">4. ¿Qué resultado buscamos?</label>
+            <select id="form-kpi-sentido" class="w-full px-3 py-2 border bg-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="MAYOR_MEJOR">📈 Mientras más alto, mejor (ej. Ventas)</option>
+              <option value="MENOR_MEJOR">📉 Mientras más bajo, mejor (ej. Merma)</option>
+              <option value="RANGO">🎯 Mantener en un rango ideal (ej. Humedad)</option>
             </select>
           </div>
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Meta Numérica:</label>
-            <input type="number" id="form-kpi-meta" step="any" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <label class="font-bold text-slate-700 block mb-1">5. Meta a Alcanzar:</label>
+            <input type="number" id="form-kpi-meta" step="any" required placeholder="Ej. 100 o 25000" class="w-full px-3 py-2 border bg-white rounded-xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 focus:outline-none">
           </div>
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Unidad de Medida:</label>
-            <select id="form-kpi-unidad" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-              <option value="%">% (Porcentaje)</option>
-              <option value="S/">S/ (Soles)</option>
+            <label class="font-bold text-slate-700 block mb-1">6. ¿En qué se mide?</label>
+            <select id="form-kpi-unidad" class="w-full px-3 py-2 border bg-white rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="%">% (Porcentaje, de 0 a 100)</option>
+              <option value="S/">S/ (Soles Peruanos)</option>
               <option value="Kg">Kg (Kilogramos)</option>
-              <option value="Unidades">Unidades</option>
+              <option value="Unidades">Unidades / Clientes</option>
             </select>
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-          <div>
-            <label class="font-semibold text-emerald-700 block mb-1">Umbral Verde (Cumplido >= %):</label>
-            <input type="number" id="form-kpi-umbral-verde" value="90" step="1" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        <!-- Paso 4: Semáforo explicado de forma intuitiva -->
+        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-slate-700">7. Semáforo de Cumplimiento (Se deja en 90% y 75% por defecto)</span>
+            <span class="text-[10px] text-slate-400">Calcula el color automáticamente</span>
           </div>
-          <div>
-            <label class="font-semibold text-amber-700 block mb-1">Umbral Amarillo (Alerta >= %):</label>
-            <input type="number" id="form-kpi-umbral-amarillo" value="75" step="1" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-emerald-50/70 border border-emerald-200 p-2.5 rounded-xl">
+              <label class="font-bold text-emerald-800 block mb-1">🟢 Verde (Meta Lograda) desde %:</label>
+              <input type="number" id="form-kpi-umbral-verde" value="90" step="1" class="w-full px-3 py-1.5 border border-emerald-300 bg-white rounded-lg font-bold text-emerald-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+              <span class="text-[10px] text-emerald-700 mt-1 block">Si llega a este % o más, se marca Cumplido.</span>
+            </div>
+            <div class="bg-amber-50/70 border border-amber-200 p-2.5 rounded-xl">
+              <label class="font-bold text-amber-800 block mb-1">🟡 Amarillo (En Alerta) desde %:</label>
+              <input type="number" id="form-kpi-umbral-amarillo" value="75" step="1" class="w-full px-3 py-1.5 border border-amber-300 bg-white rounded-lg font-bold text-amber-900 focus:ring-2 focus:ring-amber-500 focus:outline-none">
+              <span class="text-[10px] text-amber-700 mt-1 block">Debajo de este % se marcará Rojo (Crítico 🔴).</span>
+            </div>
           </div>
         </div>
 
+        <!-- Paso 5: Responsable con autocompletado -->
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Responsable en Planta / Comercial:</label>
-          <input type="text" id="form-kpi-responsable" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <label class="font-bold text-slate-700 block mb-1">8. Persona o Área Responsable:</label>
+          <input type="text" id="form-kpi-responsable" list="lista-responsables-agro" placeholder="Haz clic para elegir un responsable o escribe su nombre..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
         </div>
 
-        <div class="pt-3 flex justify-end space-x-2">
+        <div class="pt-3 flex justify-end space-x-2 border-t border-slate-100">
           <button type="button" onclick="document.getElementById('modal-form-kpi').classList.add('hidden')" class="px-4 py-2 border rounded-xl font-semibold text-slate-600 hover:bg-slate-50">Cancelar</button>
-          <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-md">Guardar Indicador</button>
+          <button type="submit" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold shadow-md">Guardar Indicador</button>
         </div>
       </form>
     </div>
@@ -1004,59 +1061,72 @@
     </div>
   </div>
 
-  <!-- Modal 5: Registro Rápido de Medición -->
+  <!-- Modal 5: Registro Rápido de Medición (Amigable con Logo) -->
   <div id="modal-registro-medicion" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
     <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-200">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-        <h3 class="font-heading font-bold text-lg text-slate-900">Registrar Medición de KPI</h3>
+        <div class="flex items-center space-x-3">
+          <img src="/static/img/logo_agroperuvian.png" alt="Agro Peruvian Foods" class="w-10 h-10 rounded-full object-cover border border-emerald-500/40 shadow-sm">
+          <div>
+            <h3 class="font-heading font-bold text-lg text-slate-900 leading-tight">Registrar Resultado de Indicador</h3>
+            <p class="text-[11px] text-slate-500">El semáforo y el tablero se actualizarán al instante</p>
+          </div>
+        </div>
         <button onclick="document.getElementById('modal-registro-medicion').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
       </div>
 
       <form onsubmit="app.guardarMedicion(event)" class="space-y-3.5 text-xs">
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Seleccione Indicador KPI:</label>
-          <select id="form-med-kpi" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+          <label class="font-bold text-slate-700 block mb-1">1. ¿Qué indicador deseas actualizar?</label>
+          <select id="form-med-kpi" onchange="app.actualizarAyudaMedicion()" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
+          <div id="form-med-meta-hint" class="mt-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-medium hidden"></div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Período de Evaluación:</label>
+            <label class="font-bold text-slate-700 block mb-1">2. Mes / Período:</label>
             <select id="form-med-periodo" class="period-select-sync w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
           </div>
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Fecha de Medición:</label>
+            <label class="font-bold text-slate-700 block mb-1">Fecha del Resultado:</label>
             <input type="date" id="form-med-fecha" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
           </div>
         </div>
 
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Valor Obtenido:</label>
-          <input type="number" id="form-med-valor" step="any" required placeholder="ej. 24500 o 4.8" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-base font-bold text-slate-900">
+          <label id="form-med-valor-label" class="font-bold text-slate-700 block mb-1">3. Resultado o Valor Alcanzado:</label>
+          <input type="number" id="form-med-valor" step="any" required placeholder="Escribe aquí el número obtenido, ej. 25200 o 95" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none text-base font-bold text-slate-900">
         </div>
 
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Observaciones / Glosa Operativa:</label>
-          <textarea id="form-med-observaciones" rows="2" placeholder="ej. Conforme según reporte de cierre de producción planta Satipo..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+          <label class="font-bold text-slate-700 block mb-1">4. Comentario o Nota (Opcional):</label>
+          <textarea id="form-med-observaciones" rows="2" placeholder="Ej. Resultado del cierre mensual de planta / ventas..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
         </div>
 
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Responsable del Registro:</label>
-          <input type="text" id="form-med-responsable" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <label class="font-bold text-slate-700 block mb-1">5. Registrado por:</label>
+          <input type="text" id="form-med-responsable" list="lista-responsables-agro" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
         </div>
 
         <div class="pt-3 flex justify-end space-x-2">
           <button type="button" onclick="document.getElementById('modal-registro-medicion').classList.add('hidden')" class="px-4 py-2 border rounded-xl font-semibold text-slate-600 hover:bg-slate-50">Cancelar</button>
-          <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md">Guardar y Recalcular BSC</button>
+          <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md">Guardar Resultado</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal 6: Formulario Iniciativa -->
+  <!-- Modal 6: Formulario Iniciativa (Amigable con Logo) -->
   <div id="modal-form-iniciativa" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm hidden p-4">
-    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-200">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 animate-in fade-in zoom-in-95 duration-200 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-        <h3 class="font-heading font-bold text-lg text-slate-900">Iniciativa Estratégica</h3>
+        <div class="flex items-center space-x-3">
+          <img src="/static/img/logo_agroperuvian.png" alt="Agro Peruvian Foods" class="w-10 h-10 rounded-full object-cover border border-emerald-500/40 shadow-sm">
+          <div>
+            <h3 class="font-heading font-bold text-lg text-slate-900 leading-tight">Proyecto o Iniciativa de Mejora</h3>
+            <p class="text-[11px] text-slate-500">Plan de acción e inversión para alcanzar un objetivo</p>
+          </div>
+        </div>
         <button onclick="document.getElementById('modal-form-iniciativa').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
       </div>
 
@@ -1064,59 +1134,68 @@
         <input type="hidden" id="form-inic-id">
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Código (ej. INI-09):</label>
-            <input type="text" id="form-inic-codigo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <label class="font-bold text-slate-700 block mb-1">Código (Automático):</label>
+            <input type="text" id="form-inic-codigo" required placeholder="Ej. INI-09" class="w-full px-3 py-2 border rounded-xl bg-slate-50 font-bold text-purple-700 focus:ring-2 focus:ring-blue-500 focus:outline-none">
           </div>
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Estado del Proyecto:</label>
+            <label class="font-bold text-slate-700 block mb-1">Estado Actual:</label>
             <select id="form-inic-estado" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
-              <option value="EN_EJECUCION">En Ejecución</option>
-              <option value="RETRASADA">Retrasada</option>
-              <option value="FINALIZADA">Finalizada</option>
+              <option value="EN_EJECUCION">🔵 En Ejecución</option>
+              <option value="RETRASADA">🔴 Retrasada</option>
+              <option value="FINALIZADA">🟢 Finalizada</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Objetivo Estratégico Asociado:</label>
+          <label class="font-bold text-slate-700 block mb-1">1. ¿Qué Objetivo apoya este proyecto?</label>
           <select id="form-inic-objetivo" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></select>
         </div>
 
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Nombre de la Iniciativa:</label>
-          <input type="text" id="form-inic-nombre" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          <label class="font-bold text-slate-700 block mb-1">2. Nombre del Proyecto o Iniciativa:</label>
+          <input type="text" id="form-inic-nombre" required placeholder="Ej. Adquisición de nueva envasadora automática para Aceite de Coco" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
         </div>
 
         <div>
-          <label class="font-semibold text-slate-700 block mb-1">Descripción / Alcance:</label>
-          <textarea id="form-inic-descripcion" rows="2" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+          <label class="font-bold text-slate-700 block mb-1">3. ¿En qué consiste? (Descripción sencilla):</label>
+          <textarea id="form-inic-descripcion" rows="2" placeholder="Describe qué se hará y qué beneficio traerá a la empresa..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Presupuesto en Soles (S/):</label>
+            <label class="font-bold text-slate-700 block mb-1">4. Presupuesto en Soles (S/):</label>
             <input type="number" id="form-inic-presupuesto" step="100" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
           </div>
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Porcentaje de Avance (%):</label>
+            <label class="font-bold text-slate-700 block mb-1">5. Avance Actual (0 a 100%):</label>
             <input type="number" id="form-inic-avance" min="0" max="100" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
           </div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Módulo Odoo 17:</label>
-            <input type="text" id="form-inic-modulo" placeholder="ej. Manufactura BOM (mrp)" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <label class="font-bold text-slate-700 block mb-1">6. Área de la Empresa:</label>
+            <select id="form-inic-modulo" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option value="Manufactura BOM (mrp)">🏭 Planta y Producción (BOM)</option>
+              <option value="Ventas (sale_management)">🛍️ Ventas y E-Commerce</option>
+              <option value="CRM (crm)">🤝 CRM y Clientes B2B</option>
+              <option value="Inventario (stock)">📦 Almacén e Inventario</option>
+              <option value="Compras (purchase)">🚚 Compras y Proveedores</option>
+              <option value="Facturación (account)">🧾 Facturación y Finanzas</option>
+              <option value="Punto de Venta (point_of_sale)">🏪 Punto de Venta (Tienda)</option>
+              <option value="Empleados (hr)">👷 Recursos Humanos y Planta</option>
+            </select>
           </div>
           <div>
-            <label class="font-semibold text-slate-700 block mb-1">Líder Responsable:</label>
-            <input type="text" id="form-inic-responsable" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <label class="font-bold text-slate-700 block mb-1">7. Persona Responsable:</label>
+            <input type="text" id="form-inic-responsable" list="lista-responsables-agro" placeholder="Elige o escribe un nombre..." class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
           </div>
         </div>
 
         <div class="pt-3 flex justify-end space-x-2">
           <button type="button" onclick="document.getElementById('modal-form-iniciativa').classList.add('hidden')" class="px-4 py-2 border rounded-xl font-semibold text-slate-600 hover:bg-slate-50">Cancelar</button>
-          <button type="submit" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold shadow-md">Guardar Iniciativa</button>
+          <button type="submit" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl font-bold shadow-md">Guardar Proyecto</button>
         </div>
       </form>
     </div>
@@ -1147,9 +1226,9 @@
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-2 pointer-events-none max-w-md"></div>
 
   <!-- Scripts de la Aplicación -->
-  <script src="/static/js/api.js?v=2"></script>
-  <script src="/static/js/state.js?v=2"></script>
-  <script src="/static/js/charts.js?v=2"></script>
-  <script src="/static/js/app.js?v=2"></script>
+  <script src="/static/js/api.js?v=3"></script>
+  <script src="/static/js/state.js?v=3"></script>
+  <script src="/static/js/charts.js?v=3"></script>
+  <script src="/static/js/app.js?v=3"></script>
 </body>
 </html>

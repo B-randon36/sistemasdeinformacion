@@ -18,7 +18,7 @@ def get_reporte_consolidado(
 ):
     if not periodo:
         p_act = db.query(Periodo).filter(Periodo.activo == True).first()
-        periodo = p_act.codigo if p_act else "2026-10"
+        periodo = p_act.codigo if p_act else "2026-11"
 
     bsc = recalcular_todo_el_bsc(db, periodo)
 
@@ -97,7 +97,7 @@ def exportar_csv(
 ):
     if not periodo:
         p_act = db.query(Periodo).filter(Periodo.activo == True).first()
-        periodo = p_act.codigo if p_act else "2026-10"
+        periodo = p_act.codigo if p_act else "2026-11"
 
     recalcular_todo_el_bsc(db, periodo)
     kpis = db.query(IndicadorKpi).all()

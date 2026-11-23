@@ -10,12 +10,12 @@ router = APIRouter(prefix="/bsc", tags=["Integración Odoo 17 ERP"])
 
 @router.post("/sync-odoo", response_model=SyncResponse)
 def sincronizar_odoo(
-    periodo: Optional[str] = Query(None, description="Período a sincronizar, ej. 2026-10"),
+    periodo: Optional[str] = Query(None, description="Período a sincronizar, ej. 2026-11"),
     db: Session = Depends(get_db)
 ):
     if not periodo:
         periodo_activo = db.query(Periodo).filter(Periodo.activo == True).first()
-        periodo = periodo_activo.codigo if periodo_activo else "2026-10"
+        periodo = periodo_activo.codigo if periodo_activo else "2026-11"
 
     resultado = odoo_connector.sincronizar_metricas_completas(db, periodo)
     return resultado

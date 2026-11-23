@@ -14,7 +14,7 @@ router = APIRouter(prefix="/dashboard", tags=["Dashboard Ejecutivo"])
 
 @router.get("/metrics")
 def get_dashboard_metrics(
-    periodo: Optional[str] = Query(None, description="Código de período, ej. 2026-10"),
+    periodo: Optional[str] = Query(None, description="Código de período, ej. 2026-11"),
     modulo: Optional[str] = Query(None, description="Filtro de módulo Odoo"),
     responsable: Optional[str] = Query(None, description="Filtro de responsable"),
     db: Session = Depends(get_db)
@@ -26,7 +26,7 @@ def get_dashboard_metrics(
     if not periodo_obj:
         periodo_obj = db.query(Periodo).filter(Periodo.activo == True).first()
     
-    periodo_cod = periodo_obj.codigo if periodo_obj else "2026-10"
+    periodo_cod = periodo_obj.codigo if periodo_obj else "2026-11"
 
     # Ejecutar consolidación
     bsc_data = recalcular_todo_el_bsc(db, periodo_cod)

@@ -53,8 +53,11 @@ def create_periodo(data: PeriodoCreate, db: Session = Depends(get_db)):
 
     periodo = Periodo(**data.model_dump())
     if periodo.activo:
-        # Desactivar los demás
-        db.query(Periodo).update({Periodo.activo: False})
+        # Desactivar los demás y quitar etiqueta de período actual
+        for p in db.query(Periodo).all():
+            p.activo = False
+            if " (Período Actual)" in p.nombre:
+                p.nombre = p.nombre.replace(" (Período Actual)", "")
 
     db.add(periodo)
     db.commit()
@@ -67,8 +70,13 @@ def activar_periodo(id: int, db: Session = Depends(get_db)):
     if not periodo:
         raise HTTPException(status_code=404, detail="Período no encontrado.")
 
-    db.query(Periodo).update({Periodo.activo: False})
+    for p in db.query(Periodo).all():
+        p.activo = False
+        if " (Período Actual)" in p.nombre:
+            p.nombre = p.nombre.replace(" (Período Actual)", "")
     periodo.activo = True
+    if "(Período Actual)" not in periodo.nombre:
+        periodo.nombre = f"{periodo.nombre} (Período Actual)"
     db.commit()
     return {"mensaje": f"Período {periodo.codigo} activado como oficial."}
 

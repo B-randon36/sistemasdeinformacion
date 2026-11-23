@@ -1,6 +1,6 @@
 """
 Conector de Integración Odoo 17 ERP (agroperuvian_db) y n8n Webhook - AGRO PERUVIAN FOODS S.A.C.
-RUC: 20608976541 | Satipo, Junín, Perú.
+RUC: 20609060876 | Puente Piedra, Lima / Satipo, Junín, Perú.
 Maneja conexión XML-RPC nativa a Odoo 17 (execute_kw sobre modelos reales),
 Webhook a n8n y Motor Fallback Resiliente.
 """
@@ -71,7 +71,7 @@ class Odoo17Connector:
         try:
             resp = requests.post(
                 self.n8n_url,
-                json={"ping": True, "empresa": "AGRO PERUVIAN FOODS S.A.C.", "ruc": "20608976541", "timestamp": str(datetime.datetime.now())},
+                json={"ping": True, "empresa": "AGRO PERUVIAN FOODS S.A.C.", "ruc": "20609060876", "timestamp": str(datetime.datetime.now())},
                 timeout=DEFAULT_TIMEOUT
             )
             return {"conectado": resp.status_code in [200, 201], "status_code": resp.status_code}
@@ -258,7 +258,7 @@ class Odoo17Connector:
 
         return extraidos
 
-    def sincronizar_metricas_completas(self, db: Session, periodo_codigo: str = "2026-10") -> Dict[str, Any]:
+    def sincronizar_metricas_completas(self, db: Session, periodo_codigo: str = "2026-11") -> Dict[str, Any]:
         """
         Ejecuta la sincronización completa de los modelos clave de Odoo 17:
         1. account.move / pos.session (Facturación y Ventas POS)
