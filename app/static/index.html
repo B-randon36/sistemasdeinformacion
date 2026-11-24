@@ -198,12 +198,14 @@
     </header>
 
     <!-- Printable Header (Visible only when printing) -->
-    <div class="print-only p-6 border-b border-slate-300 flex items-center space-x-4">
-      <img src="/static/img/logo_agroperuvian.png" alt="Logo Agro Peruvian Foods" class="w-14 h-14 rounded-full object-cover border border-slate-300">
-      <div>
-        <h1 class="text-2xl font-bold text-slate-900">AGRO PERUVIAN FOODS S.A.C. (RUC: 20609060876)</h1>
-        <h2 class="text-base text-slate-600 font-medium">Reporte Oficial de Balanced Scorecard &mdash; "Transformando la riqueza del cacao y coco peruano"</h2>
-        <p class="text-xs text-slate-500 mt-1">Puente Piedra, Lima / Planta Satipo, Junín, Perú &bull; Integración ERP Odoo 17</p>
+    <div class="print-only p-6 border-b border-slate-300">
+      <div class="flex items-center space-x-4">
+        <img src="/static/img/logo_agroperuvian.png" alt="Logo Agro Peruvian Foods" class="w-14 h-14 rounded-full object-cover border border-slate-300">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900">AGRO PERUVIAN FOODS S.A.C. (RUC: 20609060876)</h1>
+          <h2 class="text-base text-slate-600 font-medium">Reporte Oficial de Balanced Scorecard &mdash; "Transformando la riqueza del cacao y coco peruano"</h2>
+          <p class="text-xs text-slate-500 mt-1">Puente Piedra, Lima / Planta Satipo, Junín, Perú &bull; Integración ERP Odoo 17</p>
+        </div>
       </div>
     </div>
 
@@ -225,7 +227,7 @@
               </div>
               <h2 class="font-heading font-extrabold text-2xl tracking-tight text-white">Tablero de Control Balanced Scorecard</h2>
               <p class="text-xs text-slate-300 mt-1 max-w-2xl">
-                Monitoreo continuo de los 16 Objetivos Estratégicos y 14 KPIs de <strong>AGRO PERUVIAN FOODS S.A.C.</strong> sincronizados en tiempo real desde <strong>Odoo 17</strong>.
+                Monitoreo continuo de los <span class="js-total-objetivos">16</span> Objetivos Estratégicos y <span class="js-total-kpis">20</span> KPIs de <strong>AGRO PERUVIAN FOODS S.A.C.</strong> sincronizados en tiempo real desde <strong>Odoo 17</strong>.
               </p>
             </div>
           </div>
@@ -343,7 +345,7 @@
           <!-- Gráfico Doughnut Semáforos -->
           <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm">
             <h3 class="font-bold text-slate-800 text-base mb-1">Distribución de Semáforos</h3>
-            <span class="text-xs text-slate-500 block mb-4">Proporción de estados de los 14 KPIs</span>
+            <span class="text-xs text-slate-500 block mb-4">Proporción de estados de los <span class="js-total-kpis">20</span> KPIs</span>
             <div class="h-56 relative">
               <canvas id="chart-doughnut-semaforos"></canvas>
             </div>
@@ -373,7 +375,7 @@
               <span class="text-xs text-slate-500">KPIs en estado <strong>Crítico</strong> (< 75%) o <strong>En Alerta</strong> (75% - 89.9%)</span>
             </div>
             <button onclick="app.switchView('kpis')" class="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center space-x-1">
-              <span>Ver todos los 14 KPIs</span>
+              <span>Ver todos los <span class="js-total-kpis">20</span> KPIs</span>
               <i class="fas fa-arrow-right"></i>
             </button>
           </div>
@@ -429,7 +431,7 @@
       <section id="view-objetivos" class="view-section hidden space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
           <div>
-            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Objetivos Estratégicos (16)</h2>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Objetivos Estratégicos (<span class="js-total-objetivos">16</span>)</h2>
             <p class="text-xs text-slate-500 mt-1">Gestión integral, ponderación estratégica y alineación a módulos Odoo 17.</p>
           </div>
           <button onclick="app.abrirModalNuevoObjetivo()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md shadow-blue-600/20 flex items-center space-x-2 transition-all">
@@ -467,8 +469,8 @@
       <section id="view-kpis" class="view-section hidden space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
           <div>
-            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Indicadores KPI (14)</h2>
-            <p class="text-xs text-slate-500 mt-1">Fórmulas, modelos técnicos de Odoo 17 (`sale.order`, `mrp.production`, etc.) y umbrales semafóricos.</p>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Indicadores KPI (<span class="js-total-kpis">20</span>)</h2>
+            <p class="text-xs text-slate-500 mt-1">Indicadores de desempeño conectados con los módulos de Odoo 17 y sus umbrales semafóricos.</p>
           </div>
           <div class="flex items-center space-x-2">
             <button class="btn-sync-odoo bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-3.5 py-2.5 rounded-xl shadow-sm flex items-center space-x-1.5 transition-all">
@@ -562,7 +564,7 @@
       <section id="view-iniciativas" class="view-section hidden space-y-6">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
           <div>
-            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Iniciativas y Proyectos Estratégicos (8)</h2>
+            <h2 class="font-heading font-extrabold text-2xl text-slate-900">Iniciativas y Proyectos Estratégicos (<span class="js-total-iniciativas">8</span>)</h2>
             <p class="text-xs text-slate-500 mt-1">Control presupuestal en Soles (S/), cronogramas y porcentaje de avance.</p>
           </div>
           <button onclick="app.abrirModalNuevaIniciativa()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md shadow-purple-600/20 flex items-center space-x-2 transition-all">
@@ -1226,9 +1228,9 @@
   <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-2 pointer-events-none max-w-md"></div>
 
   <!-- Scripts de la Aplicación -->
-  <script src="/static/js/api.js?v=3"></script>
-  <script src="/static/js/state.js?v=3"></script>
-  <script src="/static/js/charts.js?v=3"></script>
-  <script src="/static/js/app.js?v=3"></script>
+  <script src="/static/js/api.js?v=4"></script>
+  <script src="/static/js/state.js?v=4"></script>
+  <script src="/static/js/charts.js?v=4"></script>
+  <script src="/static/js/app.js?v=4"></script>
 </body>
 </html>

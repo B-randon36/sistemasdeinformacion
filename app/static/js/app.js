@@ -186,6 +186,9 @@ const app = {
       document.getElementById('dash-total-objetivos').textContent = data.total_objetivos;
       document.getElementById('dash-total-kpis').textContent = data.total_kpis;
       document.getElementById('dash-total-iniciativas').textContent = data.total_iniciativas;
+      document.querySelectorAll('.js-total-objetivos').forEach(el => { el.textContent = data.total_objetivos; });
+      document.querySelectorAll('.js-total-kpis').forEach(el => { el.textContent = data.total_kpis; });
+      document.querySelectorAll('.js-total-iniciativas').forEach(el => { el.textContent = data.total_iniciativas; });
 
       document.getElementById('dash-badge-cumplidos').textContent = data.total_cumplidos;
       document.getElementById('dash-badge-alerta').textContent = data.total_alerta;
@@ -549,6 +552,7 @@ const app = {
       if (state.filters.kpis.search) filters.search = state.filters.kpis.search;
 
       const kpis = await api.getKpis(filters);
+      document.querySelectorAll('.js-total-kpis').forEach(el => { el.textContent = kpis.length; });
       const tbody = document.getElementById('kpis-table-body');
       if (!tbody) return;
 
